@@ -1,8 +1,8 @@
-package com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.integer;
+package com.dcrux.buran.coredb.iface.propertyTypes.integer;
 
 import com.dcrux.buran.coredb.iface.nodeClass.*;
-import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.PrimGet;
-import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.PrimSet;
+import com.dcrux.buran.coredb.iface.propertyTypes.PrimGet;
+import com.dcrux.buran.coredb.iface.propertyTypes.PrimSet;
 
 import javax.annotation.Nullable;
 
@@ -25,7 +25,10 @@ public class IntType implements IType {
 
   @Override
   public boolean supports(CmpRef comparator) {
-    return false;  //To change body of implemented methods use File | Settings | File Templates.
+    if (comparator.equals(IntEq.REF)) {
+      return true;
+    }
+    return false;
   }
 
   @Override

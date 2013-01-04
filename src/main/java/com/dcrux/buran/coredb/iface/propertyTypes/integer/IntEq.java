@@ -1,17 +1,20 @@
-package com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.string;
+package com.dcrux.buran.coredb.iface.propertyTypes.integer;
 
 import com.dcrux.buran.coredb.iface.nodeClass.CmpRef;
 import com.dcrux.buran.coredb.iface.nodeClass.ICmp;
 
+import javax.annotation.Nullable;
+
 /**
  * @author caelis
  */
-public class StringEq implements ICmp {
-  public static final CmpRef REF = new CmpRef((short) 21);
+public class IntEq implements ICmp {
+  public static final CmpRef REF = new CmpRef((short) 44);
 
-  private final String rhs;
+  @Nullable
+  private final Integer rhs;
 
-  public StringEq(String rhs) {
+  public IntEq(@Nullable Integer rhs) {
     this.rhs = rhs;
   }
 
@@ -21,7 +24,7 @@ public class StringEq implements ICmp {
   }
 
   @Override
-  public boolean matches(Object lhs) {
+  public boolean matches(@Nullable Object lhs) {
     if ((lhs == null) && (this.rhs == null)) {
       return true;
     }

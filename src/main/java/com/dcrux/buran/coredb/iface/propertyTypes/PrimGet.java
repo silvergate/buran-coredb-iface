@@ -1,4 +1,4 @@
-package com.dcrux.buran.coredb.iface.nodeClass.propertyTypes;
+package com.dcrux.buran.coredb.iface.propertyTypes;
 
 import com.dcrux.buran.coredb.iface.nodeClass.IDataGetter;
 

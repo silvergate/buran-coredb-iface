@@ -1,8 +1,8 @@
-package com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.string;
+package com.dcrux.buran.coredb.iface.propertyTypes.string;
 
 import com.dcrux.buran.coredb.iface.nodeClass.*;
-import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.PrimGet;
-import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.PrimSet;
+import com.dcrux.buran.coredb.iface.propertyTypes.PrimGet;
+import com.dcrux.buran.coredb.iface.propertyTypes.PrimSet;
 
 import javax.annotation.Nullable;
 
