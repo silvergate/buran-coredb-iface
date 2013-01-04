@@ -4,6 +4,8 @@ import com.dcrux.buran.coredb.iface.nodeClass.*;
 import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.PrimGet;
 import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.PrimSet;
 
+import javax.annotation.Nullable;
+
 /**
  * @author caelis
  */
@@ -15,9 +17,10 @@ public class IntType implements IType {
     return REF;
   }
 
+  @Nullable
   @Override
-  public boolean supports(SorterRef sorting) {
-    return false;  //To change body of implemented methods use File | Settings | File Templates.
+  public ISorter getSorter(SorterRef sorterRef) {
+    return null;
   }
 
   @Override
@@ -40,5 +43,19 @@ public class IntType implements IType {
       return true;
     }
     return false;
+  }
+
+  @Nullable
+  @Override
+  public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
+    final PrimSet ds = (PrimSet) dataSetter;
+    final Integer value = (Integer) ds.getValue();
+    return value;
+  }
+
+  @Nullable
+  @Override
+  public Object getData(IDataGetter dataGetter, @Nullable Object value) {
+    return (Integer) value;
   }
 }

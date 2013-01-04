@@ -2,14 +2,15 @@ package com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.string;
 
 import com.dcrux.buran.coredb.iface.nodeClass.ISorter;
 import com.dcrux.buran.coredb.iface.nodeClass.SorterRef;
+import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.SorterRefs;
 
 /**
  * @author caelis
  */
 public class StringUnicodeSort implements ISorter {
 
-  private static final SorterRef REF = new SorterRef((short) 1);
-  private static final StringUnicodeSort SINGLETON = new StringUnicodeSort();
+  static final SorterRef REF = SorterRefs.NATURAL;
+  static final StringUnicodeSort SINGLETON = new StringUnicodeSort();
 
   @Override
   public ISorter getSingleton() {

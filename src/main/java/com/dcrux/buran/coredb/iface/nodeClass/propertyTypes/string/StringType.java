@@ -4,6 +4,8 @@ import com.dcrux.buran.coredb.iface.nodeClass.*;
 import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.PrimGet;
 import com.dcrux.buran.coredb.iface.nodeClass.propertyTypes.PrimSet;
 
+import javax.annotation.Nullable;
+
 /**
  * @author caelis
  */
@@ -43,9 +45,13 @@ public class StringType implements IType {
     this.equalsQuery = equalsQuery;
   }
 
+  @Nullable
   @Override
-  public boolean supports(SorterRef sorting) {
-    return false;
+  public ISorter getSorter(SorterRef sorterRef) {
+    if (sorterRef.equals(StringUnicodeSort.REF)) {
+      return StringUnicodeSort.SINGLETON;
+    }
+    return null;
   }
 
   @Override
@@ -71,5 +77,19 @@ public class StringType implements IType {
       return true;
     }
     return false;
+  }
+
+  @Nullable
+  @Override
+  public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
+    final PrimSet ds = (PrimSet) dataSetter;
+    final String value = (String) ds.getValue();
+    return value;
+  }
+
+  @Nullable
+  @Override
+  public Object getData(IDataGetter dataGetter, @Nullable Object value) {
+    return (String) value;
   }
 }
