@@ -4,13 +4,13 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  * @author caelis
  */
 public class InformationUnavailableException extends UnexpectableException {
-  private final UnavailabilityReason tempUnavailable;
+    private final UnavailabilityReason tempUnavailable;
 
-  public InformationUnavailableException(UnavailabilityReason tempUnavailable) {
-    this.tempUnavailable = tempUnavailable;
-  }
+    public InformationUnavailableException(UnavailabilityReason tempUnavailable) {
+        this.tempUnavailable = tempUnavailable;
+    }
 
-  public UnavailabilityReason isTempUnavailable() {
-    return tempUnavailable;
-  }
+    public UnavailabilityReason isTempUnavailable() {
+        return tempUnavailable;
+    }
 }

@@ -9,14 +9,14 @@ import java.util.Map;
  */
 public class UserNodePermission {
 
-  public void add(NodePermActions nodePermActions, AllowOrDeny allowOrDeny) {
-    this.map.put(nodePermActions, allowOrDeny);
-  }
+    public void add(NodePermActions nodePermActions, AllowOrDeny allowOrDeny) {
+        this.map.put(nodePermActions, allowOrDeny);
+    }
 
-  private final Map<NodePermActions, AllowOrDeny> map = new HashMap<>();
+    private final Map<NodePermActions, AllowOrDeny> map = new HashMap<>();
 
-  @Nullable
-  public AllowOrDeny getAllowOrDeny(final NodePermActions npa) {
-    return this.map.get(npa);
-  }
+    @Nullable
+    public AllowOrDeny getAllowOrDeny(final NodePermActions npa) {
+        return this.map.get(npa);
+    }
 }

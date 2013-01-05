@@ -10,55 +10,55 @@ import javax.annotation.Nullable;
  * @author caelis
  */
 public class IntType implements IType {
-  public static final TypeRef REF = new TypeRef((short) 22);
+    public static final TypeRef REF = new TypeRef((short) 22);
 
-  @Override
-  public TypeRef getRef() {
-    return REF;
-  }
-
-  @Nullable
-  @Override
-  public ISorter getSorter(SorterRef sorterRef) {
-    return null;
-  }
-
-  @Override
-  public boolean supports(CmpRef comparator) {
-    if (comparator.equals(IntEq.REF)) {
-      return true;
+    @Override
+    public TypeRef getRef() {
+        return REF;
     }
-    return false;
-  }
 
-  @Override
-  public boolean supports(IDataSetter dataSetter) {
-    if (dataSetter.getClass().equals(PrimSet.class)) {
-      final PrimSet ps = (PrimSet) dataSetter;
-      return ps.getValue() instanceof Integer;
+    @Nullable
+    @Override
+    public ISorter getSorter(SorterRef sorterRef) {
+        return null;
     }
-    return false;
-  }
 
-  @Override
-  public boolean supports(IDataGetter dataGetter) {
-    if (dataGetter.getClass().equals(PrimGet.class)) {
-      return true;
+    @Override
+    public boolean supports(CmpRef comparator) {
+        if (comparator.equals(IntEq.REF)) {
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
 
-  @Nullable
-  @Override
-  public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
-    final PrimSet ds = (PrimSet) dataSetter;
-    final Integer value = (Integer) ds.getValue();
-    return value;
-  }
+    @Override
+    public boolean supports(IDataSetter dataSetter) {
+        if (dataSetter.getClass().equals(PrimSet.class)) {
+            final PrimSet ps = (PrimSet) dataSetter;
+            return ps.getValue() instanceof Integer;
+        }
+        return false;
+    }
 
-  @Nullable
-  @Override
-  public Object getData(IDataGetter dataGetter, @Nullable Object value) {
-    return (Integer) value;
-  }
+    @Override
+    public boolean supports(IDataGetter dataGetter) {
+        if (dataGetter.getClass().equals(PrimGet.class)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Nullable
+    @Override
+    public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
+        final PrimSet ds = (PrimSet) dataSetter;
+        final Integer value = (Integer) ds.getValue();
+        return value;
+    }
+
+    @Nullable
+    @Override
+    public Object getData(IDataGetter dataGetter, @Nullable Object value) {
+        return (Integer) value;
+    }
 }

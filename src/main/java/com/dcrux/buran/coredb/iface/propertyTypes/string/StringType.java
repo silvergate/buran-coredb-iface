@@ -11,85 +11,76 @@ import javax.annotation.Nullable;
  */
 public class StringType implements IType {
 
-  public static final TypeRef REF = new TypeRef((short) 1);
+    public static final TypeRef REF = new TypeRef((short) 1);
 
-  @Override
-  public TypeRef getRef() {
-    return REF;
-  }
-
-  private final boolean unicodeSorting;
-  private final boolean unicodeRangeQuery;
-  private final boolean equalsQuery;
-
-  public boolean isUnicodeSorting() {
-    return unicodeSorting;
-  }
-
-  public boolean isEqualsQuery() {
-    return equalsQuery;
-  }
-
-  /* Fulltext search */
-
-  // Falls true, werden stopwords entfernt. Wird nach einem stopword gesucht
-  /*private final boolean ftsRemoveStopWords = true;
-  private final boolean ftsPhoeneticQuery = true;
-  private final boolean ftsExactQuery = true;
-  private final boolean ftsExactICaseQuery = true;
-  private final boolean ftsBeginsWith = true;  */
-
-  public StringType(boolean unicodeSorting, boolean unicodeRangeQuery, boolean equalsQuery) {
-    this.unicodeSorting = unicodeSorting;
-    this.unicodeRangeQuery = unicodeRangeQuery;
-    this.equalsQuery = equalsQuery;
-  }
-
-  @Nullable
-  @Override
-  public ISorter getSorter(SorterRef sorterRef) {
-    if (sorterRef.equals(StringUnicodeSort.REF)) {
-      return StringUnicodeSort.SINGLETON;
+    @Override
+    public TypeRef getRef() {
+        return REF;
     }
-    return null;
-  }
 
-  @Override
-  public boolean supports(CmpRef comparator) {
-    if (this.equalsQuery && (comparator.equals(StringEq.REF))) {
-      return true;
+    private final boolean unicodeSorting;
+    private final boolean unicodeRangeQuery;
+    private final boolean equalsQuery;
+
+    public boolean isUnicodeSorting() {
+        return unicodeSorting;
     }
-    return false;
-  }
 
-  @Override
-  public boolean supports(IDataSetter dataSetter) {
-    if (dataSetter.getClass().equals(PrimSet.class)) {
-      final PrimSet ps = (PrimSet) dataSetter;
-      return ps.getValue() instanceof String;
+    public boolean isEqualsQuery() {
+        return equalsQuery;
     }
-    return false;
-  }
 
-  @Override
-  public boolean supports(IDataGetter dataGetter) {
-    if (dataGetter.getClass().equals(PrimGet.class)) {
-      return true;
+    public StringType(boolean unicodeSorting, boolean unicodeRangeQuery, boolean equalsQuery) {
+        this.unicodeSorting = unicodeSorting;
+        this.unicodeRangeQuery = unicodeRangeQuery;
+        this.equalsQuery = equalsQuery;
     }
-    return false;
-  }
 
-  @Nullable
-  @Override
-  public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
-    final PrimSet ds = (PrimSet) dataSetter;
-    final String value = (String) ds.getValue();
-    return value;
-  }
+    @Nullable
+    @Override
+    public ISorter getSorter(SorterRef sorterRef) {
+        if (sorterRef.equals(StringUnicodeSort.REF)) {
+            return StringUnicodeSort.SINGLETON;
+        }
+        return null;
+    }
 
-  @Nullable
-  @Override
-  public Object getData(IDataGetter dataGetter, @Nullable Object value) {
-    return (String) value;
-  }
+    @Override
+    public boolean supports(CmpRef comparator) {
+        if (this.equalsQuery && (comparator.equals(StringEq.REF))) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean supports(IDataSetter dataSetter) {
+        if (dataSetter.getClass().equals(PrimSet.class)) {
+            final PrimSet ps = (PrimSet) dataSetter;
+            return ps.getValue() instanceof String;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean supports(IDataGetter dataGetter) {
+        if (dataGetter.getClass().equals(PrimGet.class)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Nullable
+    @Override
+    public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
+        final PrimSet ds = (PrimSet) dataSetter;
+        final String value = (String) ds.getValue();
+        return value;
+    }
+
+    @Nullable
+    @Override
+    public Object getData(IDataGetter dataGetter, @Nullable Object value) {
+        return (String) value;
+    }
 }

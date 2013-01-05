@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
  * @author caelis
  */
 public interface ICmp {
-  CmpRef getRef();
+    CmpRef getRef();
 
-  boolean matches(@Nullable Object lhs);
+    boolean matches(@Nullable Object lhs);
 }

@@ -5,20 +5,20 @@ package com.dcrux.buran.coredb.iface.edgeTargets;
  */
 public class IncVersionedEdTarget implements IIncEdgeTarget {
 
-  //TODO: Die Incs-targets kommen vermutlich in die implementierung
+    //TODO: Die Incs-targets kommen vermutlich in die implementierung
 
-  private final long inid;
+    private final long inid;
 
-  @Override
-  public IncEdgeTargetType getIncType() {
-    return IncEdgeTargetType.versionedInc;
-  }
+    @Override
+    public IncEdgeTargetType getIncType() {
+        return IncEdgeTargetType.versionedInc;
+    }
 
-  public IncVersionedEdTarget(long inid) {
-    this.inid = inid;
-  }
+    public IncVersionedEdTarget(long inid) {
+        this.inid = inid;
+    }
 
-  public long getInid() {
-    return inid;
-  }
+    public long getInid() {
+        return inid;
+    }
 }

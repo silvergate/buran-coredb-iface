@@ -5,29 +5,29 @@ package com.dcrux.buran.coredb.iface.permissions;
  */
 public enum NodePermActions {
 
-  /* Query */
-  queryMeta,
-  queryEdges,
-  queryPayload,
+    /* Query */
+    queryMeta,
+    queryEdges,
+    queryPayload,
 
-  /* Read */
-  readMeta,
-  readEdges,
-  readPayload,
-  /* Hinweis für die beiden folgendend: Transferieren sollte immer möglich sein */
-  readPermissionsFromOtherUsers,
-  readDomains,
+    /* Read */
+    readMeta,
+    readEdges,
+    readPayload,
+    /* Hinweis für die beiden folgendend: Transferieren sollte immer möglich sein */
+    readPermissionsFromOtherUsers,
+    readDomains,
 
-  /* Permissions (update) */
-  allowMore,
-  allowLess,
-  denyMore,
-  denyLess,
+    /* Permissions (update) */
+    allowMore,
+    allowLess,
+    denyMore,
+    denyLess,
 
-  /* Domains (update) */
-  addToDomain,
-  removeFromDomain,
+    /* Domains (update) */
+    addToDomain,
+    removeFromDomain,
 
-  /* Remove a node */
-  historize
+    /* Remove a node */
+    historize
 }

@@ -6,5 +6,5 @@ import com.dcrux.buran.coredb.iface.nodeClass.NodeClass;
  * @author caelis
  */
 public interface IPropertyCondition {
-  boolean matches(Object[] data, NodeClass nodeClass);
+    boolean matches(Object[] data, NodeClass nodeClass);
 }

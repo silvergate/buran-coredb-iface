@@ -16,35 +16,35 @@ import java.util.Set;
  */
 public interface IMetaInfoForQuery {
 
-  public enum EdgeType {
-    out,
-    in
-  }
+    public enum EdgeType {
+        out,
+        in
+    }
 
-  long getClassId();
+    long getClassId();
 
-  int getVersion();
+    int getVersion();
 
-  long getValidFrom();
+    long getValidFrom();
 
-  long getValidTo();
+    long getValidTo();
 
-  long getReceiver();
+    long getReceiver();
 
-  long getSender();
+    long getSender();
 
-  UserNodePermission getOwnPermissions();
+    UserNodePermission getOwnPermissions();
 
-  Map<Long, UserNodePermission> getOtherPermissions();
+    Map<Long, UserNodePermission> getOtherPermissions();
 
-  Set<Long> getDomainIds();
+    Set<Long> getDomainIds();
 
-  NodeClass getNodeClass();
+    NodeClass getNodeClass();
 
-  /* Edges */
-  Map<EdgeIndex, Edge> getQueryableOutEdges(EdgeLabel label);
+    /* Edges */
+    Map<EdgeIndex, Edge> getQueryableOutEdges(EdgeLabel label);
 
-  Multimap<EdgeIndex, EdgeWithSource> getQueryableInEdges(EdgeLabel label);
+    Multimap<EdgeIndex, EdgeWithSource> getQueryableInEdges(EdgeLabel label);
 
-  INodeMatcher getNodeMatcher();
+    INodeMatcher getNodeMatcher();
 }

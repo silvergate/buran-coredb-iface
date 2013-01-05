@@ -9,28 +9,28 @@ import javax.annotation.Nullable;
  * @author caelis
  */
 public class StringEq implements ICmp {
-  public static final CmpRef REF = new CmpRef((short) 21);
+    public static final CmpRef REF = new CmpRef((short) 21);
 
-  @Nullable
-  private final String rhs;
+    @Nullable
+    private final String rhs;
 
-  public StringEq(@Nullable String rhs) {
-    this.rhs = rhs;
-  }
-
-  @Override
-  public CmpRef getRef() {
-    return REF;
-  }
-
-  @Override
-  public boolean matches(@Nullable Object lhs) {
-    if ((lhs == null) && (this.rhs == null)) {
-      return true;
+    public StringEq(@Nullable String rhs) {
+        this.rhs = rhs;
     }
-    if (lhs == null) {
-      return false;
+
+    @Override
+    public CmpRef getRef() {
+        return REF;
     }
-    return lhs.equals(this.rhs);
-  }
+
+    @Override
+    public boolean matches(@Nullable Object lhs) {
+        if ((lhs == null) && (this.rhs == null)) {
+            return true;
+        }
+        if (lhs == null) {
+            return false;
+        }
+        return lhs.equals(this.rhs);
+    }
 }

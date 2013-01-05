@@ -7,13 +7,13 @@ import com.google.common.base.Optional;
  * @author caelis
  */
 public class QNode implements IQNode {
-  private final Optional<INodeMetaCondition> metaCondition;
+    private final Optional<INodeMetaCondition> metaCondition;
 
-  public QNode(Optional<INodeMetaCondition> metaCondition) {
-    this.metaCondition = metaCondition;
-  }
+    public QNode(Optional<INodeMetaCondition> metaCondition) {
+        this.metaCondition = metaCondition;
+    }
 
-  public Optional<INodeMetaCondition> getMetaCondition() {
-    return metaCondition;
-  }
+    public Optional<INodeMetaCondition> getMetaCondition() {
+        return metaCondition;
+    }
 }

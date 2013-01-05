@@ -4,11 +4,11 @@ package com.dcrux.buran.coredb.iface.nodeClass;
  * @author caelis
  */
 public interface ISorter {
-  @Deprecated
-  ISorter getSingleton();
+    @Deprecated
+    ISorter getSingleton();
 
-  @Deprecated
-  SorterRef getRef();
+    @Deprecated
+    SorterRef getRef();
 
-  int compare(Object o1, Object o2);
+    int compare(Object o1, Object o2);
 }
