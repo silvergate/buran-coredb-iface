@@ -12,7 +12,7 @@ public class DomainHash {
 
     private DomainHash(byte[] hash) {
         if (hash.length != 48) {
-            throw new IllegalArgumentException("Hash has to be 364bit");
+            throw new IllegalArgumentException("Hash has to be 48 bytes");
         }
         this.hash = hash;
     }

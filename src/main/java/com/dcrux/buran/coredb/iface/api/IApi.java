@@ -2,6 +2,8 @@ package com.dcrux.buran.coredb.iface.api;
 
 import com.dcrux.buran.coredb.iface.*;
 import com.dcrux.buran.coredb.iface.api.exceptions.*;
+import com.dcrux.buran.coredb.iface.domains.DomainHash;
+import com.dcrux.buran.coredb.iface.domains.DomainId;
 import com.dcrux.buran.coredb.iface.edgeTargets.IIncEdgeTarget;
 import com.dcrux.buran.coredb.iface.nodeClass.*;
 import com.google.common.base.Optional;
@@ -316,10 +318,9 @@ public interface IApi {
      * @throws PermissionDeniedException
      */
     Map<EdgeLabel, Multimap<EdgeIndex, EdgeWithSource>> getInEdges(UserId receiver, UserId sender,
-            NidVer nid, EnumSet<EdgeType> types, Optional<EdgeLabel> label) throws
-
-
-            NodeNotFoundException, InformationUnavailableException, PermissionDeniedException;
+            NidVer nid, EnumSet<EdgeType> types, Optional<EdgeLabel> label)
+            throws NodeNotFoundException, InformationUnavailableException,
+            PermissionDeniedException;
 
     /*********************************************************************************************
      * REGION: Meta-Data read api
@@ -373,4 +374,26 @@ public interface IApi {
      * REGION: Domain API
      ********************************************************************************************/
 
+    /**
+     * Creates a new domain and returns its ID.
+     *
+     * @param receiver
+     * @param sender
+     * @return
+     * @throws PermissionDeniedException
+     */
+    DomainId addAnonymousDomain(UserId receiver, UserId sender) throws PermissionDeniedException;
+
+    /**
+     * Creates a new domain identified by a hash (if non-existent) - or does nothing (if existent).
+     * Returns the domain id.
+     *
+     * @param receiver
+     * @param sender
+     * @param hash
+     * @return
+     * @throws PermissionDeniedException
+     */
+    DomainId addOrGetIdentifiedDomain(UserId receiver, UserId sender, DomainHash hash)
+            throws PermissionDeniedException;
 }
