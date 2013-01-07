@@ -6,6 +6,7 @@ import com.google.common.base.Optional;
 /**
  * @author caelis
  */
+@Deprecated
 public class QEdge {
     public QEdge(OutEdgeCondition condition, Optional<IQNode> source) {
         this.condition = condition;

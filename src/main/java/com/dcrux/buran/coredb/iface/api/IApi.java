@@ -6,6 +6,8 @@ import com.dcrux.buran.coredb.iface.domains.DomainHash;
 import com.dcrux.buran.coredb.iface.domains.DomainId;
 import com.dcrux.buran.coredb.iface.edgeTargets.IIncEdgeTarget;
 import com.dcrux.buran.coredb.iface.nodeClass.*;
+import com.dcrux.buran.coredb.iface.subscription.Subscription;
+import com.dcrux.buran.coredb.iface.subscription.SubscriptionId;
 import com.google.common.base.Optional;
 import com.google.common.collect.Multimap;
 
@@ -396,4 +398,23 @@ public interface IApi {
      */
     DomainId addOrGetIdentifiedDomain(UserId receiver, UserId sender, DomainHash hash)
             throws PermissionDeniedException;
+
+    /*********************************************************************************************
+     * REGION: Subscription API
+     ********************************************************************************************/
+
+    /**
+     * Adds a new subscription to the system and returns a generated id.
+     *
+     * @param subscription
+     * @return
+     */
+    SubscriptionId addSubscription(final Subscription subscription);
+
+    /**
+     * Removes a subscription.
+     *
+     * @param subscriptionId
+     */
+    void removeSubscription(final SubscriptionId subscriptionId);
 }
