@@ -6,6 +6,7 @@ import com.dcrux.buran.coredb.iface.domains.DomainHash;
 import com.dcrux.buran.coredb.iface.domains.DomainId;
 import com.dcrux.buran.coredb.iface.edgeTargets.IIncEdgeTarget;
 import com.dcrux.buran.coredb.iface.nodeClass.*;
+import com.dcrux.buran.coredb.iface.query.IQuery;
 import com.dcrux.buran.coredb.iface.subscription.Subscription;
 import com.dcrux.buran.coredb.iface.subscription.SubscriptionId;
 import com.google.common.base.Optional;
@@ -409,12 +410,33 @@ public interface IApi {
      * @param subscription
      * @return
      */
-    SubscriptionId addSubscription(final Subscription subscription);
+    SubscriptionId addSubscription(final Subscription subscription)
+            throws PermissionDeniedException;
 
     /**
      * Removes a subscription.
      *
      * @param subscriptionId
      */
-    void removeSubscription(final SubscriptionId subscriptionId);
+    void removeSubscription(final SubscriptionId subscriptionId) throws PermissionDeniedException;
+
+    /*********************************************************************************************
+     * REGION: Query API
+     ********************************************************************************************/
+
+    /**
+     * Performs a query against the database.
+     *
+     * @param receiverId
+     * @param senderId
+     * @param query
+     * @param countNumberOfResultsWithoutLimit
+     *         If <code>true</code> the number of results without limit is returned in the result.
+     * @return
+     * @throws PermissionDeniedException
+     *         Is only thrown if querying the completely denied. Is not thrown if only some nodes
+     *         cannot be queried (those nodes are filtered from the result-set).
+     */
+    QueryResult query(UserId receiverId, UserId senderId, IQuery query,
+            boolean countNumberOfResultsWithoutLimit) throws PermissionDeniedException;
 }

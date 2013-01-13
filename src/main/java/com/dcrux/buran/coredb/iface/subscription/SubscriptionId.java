@@ -5,7 +5,7 @@ package com.dcrux.buran.coredb.iface.subscription;
  *
  * @author: ${USER} Date: 07.01.13 Time: 21:30
  */
-public class SubscriptionId {
+public final class SubscriptionId {
     private final int id;
 
     public SubscriptionId(int id) {

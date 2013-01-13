@@ -7,11 +7,11 @@ import com.google.common.base.Optional;
 /**
  * @author caelis
  */
-public class QCdNode extends QNode {
+public class CondCdNode extends CondNode {
     private final long classId;
     private final Optional<IPropertyCondition> propertyCondition;
 
-    public QCdNode(Optional<INodeMetaCondition> metaCondition, long classId,
+    public CondCdNode(Optional<INodeMetaCondition> metaCondition, long classId,
             Optional<IPropertyCondition> propertyCondition) {
         super(metaCondition);
         this.classId = classId;

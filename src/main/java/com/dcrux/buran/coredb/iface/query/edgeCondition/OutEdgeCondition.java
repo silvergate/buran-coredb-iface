@@ -8,7 +8,7 @@ import com.dcrux.buran.coredb.iface.api.exceptions.ExpectableException;
 import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.UnversionedEdTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.VersionedEdTarget;
-import com.dcrux.buran.coredb.iface.query.IQNode;
+import com.dcrux.buran.coredb.iface.query.ICondNode;
 import com.dcrux.buran.coredb.iface.query.nodeMeta.IMetaInfoForQuery;
 import com.dcrux.buran.coredb.iface.query.nodeMeta.INodeMetaCondition;
 import com.google.common.base.Optional;
@@ -23,10 +23,10 @@ public class OutEdgeCondition implements INodeMetaCondition {
 
     private final EdgeLabel label;
     private final Optional<EdgeIndex> index;
-    private final Optional<IQNode> target;
+    private final Optional<ICondNode> target;
     private final boolean matchAll;
 
-    private OutEdgeCondition(EdgeLabel label, Optional<EdgeIndex> index, Optional<IQNode> target,
+    private OutEdgeCondition(EdgeLabel label, Optional<EdgeIndex> index, Optional<ICondNode> target,
             boolean matchAll) {
         this.label = label;
         this.index = index;
@@ -38,28 +38,28 @@ public class OutEdgeCondition implements INodeMetaCondition {
     }
 
     public static OutEdgeCondition hasAnyEdge(EdgeLabel label) {
-        return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(), Optional.<IQNode>absent(),
-                false);
+        return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
+                Optional.<ICondNode>absent(), false);
     }
 
     public static OutEdgeCondition hasEdge(EdgeLabel label, EdgeIndex index) {
-        return new OutEdgeCondition(label, Optional.<EdgeIndex>of(index), Optional.<IQNode>absent(),
-                false);
-    }
-
-    public static OutEdgeCondition hasAnyEdge(EdgeLabel label, IQNode targetNode) {
-        return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
-                Optional.<IQNode>of(targetNode), false);
-    }
-
-    public static OutEdgeCondition hasEdge(EdgeLabel label, EdgeIndex index, IQNode targetNode) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>of(index),
-                Optional.<IQNode>of(targetNode), false);
+                Optional.<ICondNode>absent(), false);
     }
 
-    public static OutEdgeCondition hasEdgeAll(EdgeLabel label, IQNode targetNode) {
+    public static OutEdgeCondition hasAnyEdge(EdgeLabel label, ICondNode targetNode) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
-                Optional.<IQNode>of(targetNode), true);
+                Optional.<ICondNode>of(targetNode), false);
+    }
+
+    public static OutEdgeCondition hasEdge(EdgeLabel label, EdgeIndex index, ICondNode targetNode) {
+        return new OutEdgeCondition(label, Optional.<EdgeIndex>of(index),
+                Optional.<ICondNode>of(targetNode), false);
+    }
+
+    public static OutEdgeCondition hasEdgeAll(EdgeLabel label, ICondNode targetNode) {
+        return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
+                Optional.<ICondNode>of(targetNode), true);
     }
 
     public EdgeLabel getLabel() {
@@ -70,7 +70,7 @@ public class OutEdgeCondition implements INodeMetaCondition {
         return index;
     }
 
-    public Optional<IQNode> getTarget() {
+    public Optional<ICondNode> getTarget() {
         return target;
     }
 

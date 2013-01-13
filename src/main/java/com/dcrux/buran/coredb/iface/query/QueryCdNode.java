@@ -5,18 +5,28 @@ import com.google.common.base.Optional;
 /**
  * @author caelis
  */
-public class QueryCdNode {
-    private final IQCdNode condition;
+public class QueryCdNode implements IQuery {
+    private final CondCdNode condition;
     private final Optional<ISorting> sorting;
     private final SkipLimit skipLimit;
 
-    public QueryCdNode(IQCdNode condition, Optional<ISorting> sorting, SkipLimit skipLimit) {
+    public QueryCdNode(CondCdNode condition, Optional<ISorting> sorting, SkipLimit skipLimit) {
         this.condition = condition;
         this.sorting = sorting;
         this.skipLimit = skipLimit;
     }
 
-    public IQCdNode getCondition() {
+    public static QueryCdNode c(CondCdNode condition) {
+        return new QueryCdNode(condition, Optional.<ISorting>absent(),
+                QueryNode.DEFAULT_SKIP_LIMIT);
+    }
+
+    public static QueryCdNode cSorted(CondCdNode condition, ISorting sort) {
+        return new QueryCdNode(condition, Optional.<ISorting>of(sort),
+                QueryNode.DEFAULT_SKIP_LIMIT);
+    }
+
+    public CondCdNode getCondition() {
         return condition;
     }
 

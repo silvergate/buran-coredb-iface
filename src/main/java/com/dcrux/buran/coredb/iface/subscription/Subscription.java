@@ -1,7 +1,7 @@
 package com.dcrux.buran.coredb.iface.subscription;
 
 import com.dcrux.buran.coredb.iface.UserId;
-import com.dcrux.buran.coredb.iface.query.IQNode;
+import com.dcrux.buran.coredb.iface.query.ICondNode;
 
 import java.util.EnumSet;
 
@@ -14,12 +14,12 @@ public class Subscription {
     private final UserId receiver;
     private final UserId sender;
     private final EnumSet<SubscriptionEventType> eventTypes;
-    private final IQNode query;
+    private final ICondNode query;
     private final ISubscriptionEventHandler handler;
     private final boolean weakHandlerReference;
 
     public Subscription(UserId receiver, UserId sender, EnumSet<SubscriptionEventType> eventTypes,
-            IQNode query, ISubscriptionEventHandler handler, boolean weakHandlerReference) {
+            ICondNode query, ISubscriptionEventHandler handler, boolean weakHandlerReference) {
         this.receiver = receiver;
         this.sender = sender;
         this.eventTypes = eventTypes;
@@ -32,7 +32,7 @@ public class Subscription {
         return eventTypes;
     }
 
-    public IQNode getQuery() {
+    public ICondNode getQuery() {
         return query;
     }
 

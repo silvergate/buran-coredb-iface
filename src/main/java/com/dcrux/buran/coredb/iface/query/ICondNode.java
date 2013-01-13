@@ -3,5 +3,5 @@ package com.dcrux.buran.coredb.iface.query;
 /**
  * @author caelis
  */
-public interface IQNode {
+public interface ICondNode {
 }

@@ -6,10 +6,10 @@ import com.google.common.base.Optional;
 /**
  * @author caelis
  */
-public class QNode implements IQNode {
+public class CondNode implements ICondNode {
     private final Optional<INodeMetaCondition> metaCondition;
 
-    public QNode(Optional<INodeMetaCondition> metaCondition) {
+    public CondNode(Optional<INodeMetaCondition> metaCondition) {
         this.metaCondition = metaCondition;
     }
 
