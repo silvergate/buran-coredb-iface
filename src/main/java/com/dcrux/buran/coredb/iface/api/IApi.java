@@ -417,8 +417,11 @@ public interface IApi {
      * Removes a subscription.
      *
      * @param subscriptionId
+     * @return Returns <code>true</code> if the subscription was found and could be removed. Returns
+     *         <code>false</code> if the subscription was not found.
      */
-    void removeSubscription(final SubscriptionId subscriptionId) throws PermissionDeniedException;
+    boolean removeSubscription(UserId receiver, UserId sender, final SubscriptionId subscriptionId)
+            throws PermissionDeniedException;
 
     /*********************************************************************************************
      * REGION: Query API

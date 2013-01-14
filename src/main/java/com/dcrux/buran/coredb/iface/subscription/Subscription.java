@@ -20,6 +20,8 @@ public class Subscription {
 
     public Subscription(UserId receiver, UserId sender, EnumSet<SubscriptionEventType> eventTypes,
             ICondNode query, ISubscriptionEventHandler handler, boolean weakHandlerReference) {
+        if (eventTypes.isEmpty())
+            throw new IllegalArgumentException("Need at least one event type.");
         this.receiver = receiver;
         this.sender = sender;
         this.eventTypes = eventTypes;
