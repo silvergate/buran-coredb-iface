@@ -1,6 +1,7 @@
 package com.dcrux.buran.coredb.iface.propertyTypes.string;
 
 import com.dcrux.buran.coredb.iface.nodeClass.*;
+import com.dcrux.buran.coredb.iface.propertyTypes.Exists;
 import com.dcrux.buran.coredb.iface.propertyTypes.PrimGet;
 import com.dcrux.buran.coredb.iface.propertyTypes.PrimSet;
 
@@ -50,6 +51,7 @@ public class StringType implements IType {
         if (this.equalsQuery && (comparator.equals(StringEq.REF))) {
             return true;
         }
+        if (this.equalsQuery && (comparator.equals(Exists.REF))) return true;
         return false;
     }
 

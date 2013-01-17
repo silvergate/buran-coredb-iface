@@ -1,6 +1,7 @@
 package com.dcrux.buran.coredb.iface.propertyTypes.integer;
 
 import com.dcrux.buran.coredb.iface.nodeClass.*;
+import com.dcrux.buran.coredb.iface.propertyTypes.Exists;
 import com.dcrux.buran.coredb.iface.propertyTypes.PrimGet;
 import com.dcrux.buran.coredb.iface.propertyTypes.PrimSet;
 
@@ -28,6 +29,7 @@ public class IntType implements IType {
         if (comparator.equals(IntEq.REF)) {
             return true;
         }
+        if (comparator.equals(Exists.REF)) return true;
         return false;
     }
 
