@@ -2,10 +2,9 @@ package com.dcrux.buran.coredb.iface.propertyTypes.blob;
 
 import com.dcrux.buran.coredb.iface.api.exceptions.ExpectableException;
 import com.dcrux.buran.coredb.iface.nodeClass.*;
-import org.apache.commons.lang.NotImplementedException;
+import com.dcrux.buran.coredb.iface.propertyTypes.Exists;
 
 import javax.annotation.Nullable;
-import java.io.ByteArrayOutputStream;
 
 /**
  * Buran.
@@ -24,12 +23,15 @@ public class BlobType implements IType {
     @Nullable
     @Override
     public ISorter getSorter(SorterRef sorterRef) {
+        if (sorterRef.getRef() == NaturalLengthSort.REF.getRef())
+            return NaturalLengthSort.SINGLETON;
         return null;
     }
 
     @Override
     public boolean supports(CmpRef comparator) {
         if (comparator.getId() == LengthEq.REF.getId()) return true;
+        if (comparator.getId() == Exists.REF.getId()) return true;
         return false;
     }
 
@@ -52,7 +54,7 @@ public class BlobType implements IType {
         final BlobSet setter = (BlobSet) dataSetter;
         final BlobData data;
         if (currentValue != null) data = (BlobData) currentValue;
-        else data = new BlobData(new ByteArrayOutputStream());
+        else data = new BlobData(new BinaryBlocks());
 
         /* Set data */
         final int pos = setter.getPos();
@@ -66,9 +68,9 @@ public class BlobType implements IType {
             }
         }
 
-        if (true) throw new NotImplementedException("TODO: Kommt noch");
-
-        //data.getData().write(setter.getData().getData(), );
+        final boolean written =
+                data.getData().setData(setter.getPos(), setter.getData().getData(), true);
+        if (!written) throw new IllegalStateException("Should not happen!");
 
         return data;
     }
@@ -76,6 +78,33 @@ public class BlobType implements IType {
     @Nullable
     @Override
     public Object getData(IDataGetter dataGetter, @Nullable Object value) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        final BlobData data;
+        if (value != null) data = (BlobData) value;
+        else data = null;
+        if (dataGetter instanceof LengthGet) {
+            final LengthGet lengthGet = (LengthGet) dataGetter;
+            if (data == null) return 0;
+            else return data.getLength();
+        }
+
+        if (dataGetter instanceof BlobGet) {
+            final BlobGet blobGet = (BlobGet) dataGetter;
+            if (data == null) throw new ExpectableException("Blob is empty");
+            int toIndex = blobGet.getSkip() + blobGet.getLength() - 1;
+            if (toIndex >= data.getLength()) {
+                /* We need to shorten */
+                if (blobGet.isStrictLength()) {
+                    /* We're not allowed to shorten */
+                    throw new ExpectableException(
+                            "Not enough data available and shorten is not " + "allowed");
+                } else {
+                    toIndex = data.getLength() - 1;
+                }
+            }
+
+            return data.getData().read(blobGet.getSkip(), toIndex);
+        }
+
+        throw new ExpectableException("Incompatible getter for this type");
     }
 }

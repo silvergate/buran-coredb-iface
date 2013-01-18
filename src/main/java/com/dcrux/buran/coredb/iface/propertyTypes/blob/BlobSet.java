@@ -13,7 +13,12 @@ public class BlobSet implements IDataSetter {
     private final boolean allowOverwrite;
     private final ByteContainer data;
 
+    public static BlobSet c(int pos, byte[] data) {
+        return new BlobSet(pos, true, new ByteContainer(data));
+    }
+
     public BlobSet(int pos, boolean allowOverwrite, ByteContainer data) {
+        if (data.getNumOfBytes() < 1) throw new IllegalArgumentException("data.getNumOfBytes()<1");
         this.pos = pos;
         this.allowOverwrite = allowOverwrite;
         this.data = data.seal();
