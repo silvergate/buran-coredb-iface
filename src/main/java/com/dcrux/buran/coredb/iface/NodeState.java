@@ -17,6 +17,18 @@ public enum NodeState {
         this.state = (byte) state;
     }
 
+    public static boolean isHistorized(NodeState nodeState) {
+        switch (nodeState) {
+            case historizedAllMissing:
+                return true;
+            case historizedAvailable:
+                return true;
+            case historizedPropertiesMissing:
+                return true;
+        }
+        return false;
+    }
+
     final byte state;
 
     public byte getState() {
