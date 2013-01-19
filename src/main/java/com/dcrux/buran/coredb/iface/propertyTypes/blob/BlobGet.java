@@ -16,6 +16,10 @@ public final class BlobGet implements IDataGetter {
         return new BlobGet(0, length, true);
     }
 
+    public static BlobGet cSkip(int skip, int length) {
+        return new BlobGet(skip, length, true);
+    }
+
     public BlobGet(int skip, int length, boolean strictLength) {
         this.skip = skip;
         this.length = length;

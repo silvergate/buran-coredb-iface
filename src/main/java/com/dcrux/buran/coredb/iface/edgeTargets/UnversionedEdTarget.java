@@ -1,5 +1,7 @@
 package com.dcrux.buran.coredb.iface.edgeTargets;
 
+import com.dcrux.buran.coredb.iface.Nid;
+
 /**
  * @author caelis
  */
@@ -15,6 +17,10 @@ public class UnversionedEdTarget implements IIncEdgeTarget, IEdgeTarget {
     @Override
     public IncEdgeTargetType getIncType() {
         return IncEdgeTargetType.unversioned;
+    }
+
+    public static UnversionedEdTarget c(Nid nid) {
+        return new UnversionedEdTarget(nid.getNid());
     }
 
     public UnversionedEdTarget(long nid) {

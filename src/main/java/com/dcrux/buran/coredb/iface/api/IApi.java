@@ -62,7 +62,7 @@ public interface IApi {
      * @return
      */
     CreateInfo createNew(UserId receiver, UserId sender, ClassId classId,
-            Optional<KeepAliveHint> keepAliveHint);
+            Optional<KeepAliveHint> keepAliveHint) throws PermissionDeniedException;
 
     /**
      * Creates a new node in incubation. The created node will update the existing node given by
@@ -164,7 +164,8 @@ public interface IApi {
      *         The specified (by label and index) edge already exists.
      * @throws IncubationNodeNotFound
      * @see #setEdgeReplace(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
-     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeIndex,
+     * .UserId,
+     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeIndex,
      *      com.dcrux.buran.coredb.iface.EdgeLabel, com.dcrux.buran.coredb.iface.edgeTargets
      *      .IIncEdgeTarget)
      */
@@ -220,7 +221,8 @@ public interface IApi {
      * @param index
      * @throws IncubationNodeNotFound
      * @see #removeEdgeStrict(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
-     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeLabel,
+     * .UserId,
+     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeLabel,
      *      com.dcrux.buran.coredb.iface.EdgeIndex)
      */
     void removeEdge(UserId receiver, UserId sender, IncNid incNid, EdgeLabel label, EdgeIndex index)

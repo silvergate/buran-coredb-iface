@@ -14,6 +14,10 @@ public class SetAdd implements IDataSetter {
         return data;
     }
 
+    public static SetAdd c(byte[] data) {
+        return new SetAdd(data);
+    }
+
     public SetAdd(byte[] data) {
         if ((data == null) || (data.length > SetType.MAX_LEN_BYTES)) {
             throw new IllegalArgumentException("Invalid length or null");

@@ -15,6 +15,8 @@ import java.util.Set;
  */
 public class SetType implements IType {
 
+    // TODO: Sort by number of elements
+
     public static final int MAX_LEN_BYTES = 256;
     public static final int MAX_NUM_OF_ELEMENTS = 512;
 
@@ -22,8 +24,14 @@ public class SetType implements IType {
 
     private final int maxNumOfElements;
     private final int maxLenOfBytes;
+    private final boolean queryable;
 
-    public SetType(int maxNumOfElements, int maxLenOfBytes) {
+    public static SetType cMaxQueryable() {
+        return new SetType(MAX_NUM_OF_ELEMENTS, MAX_LEN_BYTES, true);
+    }
+
+    public SetType(int maxNumOfElements, int maxLenOfBytes, boolean queryable) {
+        this.queryable = queryable;
         if (maxNumOfElements > MAX_NUM_OF_ELEMENTS) {
             throw new IllegalArgumentException("Max num of elements too high");
         }
@@ -55,6 +63,7 @@ public class SetType implements IType {
 
     @Override
     public boolean supports(CmpRef comparator) {
+        if (!this.queryable) return false;
         if (SetContains.REF.equals(comparator)) {
             return true;
         }
@@ -70,6 +79,7 @@ public class SetType implements IType {
                 if (set.size() > this.maxNumOfElements) {
                     return false;
                 }
+                return true;
             } else {
                 return false;
             }
@@ -106,6 +116,10 @@ public class SetType implements IType {
     public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
         if (dataSetter instanceof PrimSet) {
             final PrimSet ds = (PrimSet) dataSetter;
+
+            /* Remove all? */
+            if (ds.getValue() == null) return null;
+
             final Collection<?> value = (Collection<?>) ds.getValue();
             final Set<ByteContainer> bcSet = new HashSet<ByteContainer>();
             for (final Object entryObj : value) {

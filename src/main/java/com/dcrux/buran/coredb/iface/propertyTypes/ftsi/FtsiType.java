@@ -19,6 +19,10 @@ public class FtsiType implements IType {
         return REF;
     }
 
+    public static FtsiType c() {
+        return new FtsiType();
+    }
+
     @Nullable
     @Override
     public ISorter getSorter(SorterRef sorterRef) {

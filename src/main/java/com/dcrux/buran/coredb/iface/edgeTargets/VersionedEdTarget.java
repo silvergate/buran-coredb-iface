@@ -1,5 +1,7 @@
 package com.dcrux.buran.coredb.iface.edgeTargets;
 
+import com.dcrux.buran.coredb.iface.NidVer;
+
 /**
  * @author caelis
  */
@@ -16,6 +18,10 @@ public class VersionedEdTarget implements IIncEdgeTarget, IEdgeTarget {
     @Override
     public IncEdgeTargetType getIncType() {
         return IncEdgeTargetType.versioned;
+    }
+
+    public static VersionedEdTarget c(NidVer nidVer) {
+        return new VersionedEdTarget(nidVer.getNid(), nidVer.getVersion());
     }
 
     public VersionedEdTarget(long nid, int version) {

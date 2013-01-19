@@ -13,6 +13,24 @@ import javax.annotation.Nullable;
 public class IntType implements IType {
     public static final TypeRef REF = new TypeRef((short) 22);
 
+    private final boolean queryAndSortable;
+
+    public IntType(boolean queryAndSortable) {
+        this.queryAndSortable = queryAndSortable;
+    }
+
+    public IntType() {
+        this(false);
+    }
+
+    public static IntType c() {
+        return new IntType();
+    }
+
+    public static IntType cQueryable() {
+        return new IntType(true);
+    }
+
     @Override
     public TypeRef getRef() {
         return REF;
@@ -21,11 +39,14 @@ public class IntType implements IType {
     @Nullable
     @Override
     public ISorter getSorter(SorterRef sorterRef) {
+        if (!this.queryAndSortable) return null;
+        if (sorterRef.equals(IntNaturalSort.REF)) return IntNaturalSort.SINGLETON;
         return null;
     }
 
     @Override
     public boolean supports(CmpRef comparator) {
+        if (!this.queryAndSortable) return false;
         if (comparator.equals(IntEq.REF)) {
             return true;
         }

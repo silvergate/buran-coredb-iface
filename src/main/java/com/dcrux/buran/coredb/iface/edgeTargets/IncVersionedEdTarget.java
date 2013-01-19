@@ -1,17 +1,21 @@
 package com.dcrux.buran.coredb.iface.edgeTargets;
 
+import com.dcrux.buran.coredb.iface.IncNid;
+
 /**
  * @author caelis
  */
 public class IncVersionedEdTarget implements IIncEdgeTarget {
-
-    //TODO: Die Incs-targets kommen vermutlich in die implementierung
 
     private final long inid;
 
     @Override
     public IncEdgeTargetType getIncType() {
         return IncEdgeTargetType.versionedInc;
+    }
+
+    public static IncVersionedEdTarget c(IncNid incNid) {
+        return new IncVersionedEdTarget(incNid.getId());
     }
 
     public IncVersionedEdTarget(long inid) {

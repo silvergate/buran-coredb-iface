@@ -14,6 +14,19 @@ import javax.annotation.Nullable;
 public class BlobType implements IType {
 
     public static final TypeRef REF = new TypeRef((short) 233);
+    public static int MAX_LENGTH = Integer.MAX_VALUE;
+
+    private final boolean indexed;
+    private final int maxLength; //TODO: Wird noch nicht überprüft
+
+    public static BlobType cIndexed() {
+        return new BlobType(MAX_LENGTH, true);
+    }
+
+    public BlobType(int maxLength, boolean indexed) {
+        this.maxLength = maxLength;
+        this.indexed = indexed;
+    }
 
     @Override
     public TypeRef getRef() {
@@ -23,6 +36,7 @@ public class BlobType implements IType {
     @Nullable
     @Override
     public ISorter getSorter(SorterRef sorterRef) {
+        if (!this.indexed) return null;
         if (sorterRef.getRef() == NaturalLengthSort.REF.getRef())
             return NaturalLengthSort.SINGLETON;
         return null;
@@ -30,6 +44,7 @@ public class BlobType implements IType {
 
     @Override
     public boolean supports(CmpRef comparator) {
+        if (!this.indexed) return false;
         if (comparator.getId() == LengthEq.REF.getId()) return true;
         if (comparator.getId() == Exists.REF.getId()) return true;
         return false;

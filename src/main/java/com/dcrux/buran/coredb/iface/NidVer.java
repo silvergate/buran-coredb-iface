@@ -3,53 +3,40 @@ package com.dcrux.buran.coredb.iface;
 /**
  * @author caelis
  */
-public class NidVer {
+public class NidVer extends Nid {
 
     /**
      * First version of a node.
      */
     public static final int FIRST_VERSION = Integer.MIN_VALUE + 1;
 
-    private final long oid;
     private final int version;
-
-    public long getOid() {
-        return oid;
-    }
 
     public int getVersion() {
         return version;
     }
 
-    public NidVer(long oid, int version) {
-        this.oid = oid;
+    public NidVer(long nid, int version) {
+        super(nid);
         this.version = version;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
-        NidVer that = (NidVer) o;
+        NidVer nidVer = (NidVer) o;
 
-        if (oid != that.oid) {
-            return false;
-        }
-        if (version != that.version) {
-            return false;
-        }
+        if (version != nidVer.version) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (oid ^ (oid >>> 32));
+        int result = super.hashCode();
         result = 31 * result + version;
         return result;
     }
@@ -57,8 +44,7 @@ public class NidVer {
     @Override
     public String toString() {
         return "NidVer{" +
-                "oid=" + oid +
-                ", version=" + version +
+                "version=" + version +
                 '}';
     }
 }

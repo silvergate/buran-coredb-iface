@@ -17,6 +17,10 @@ public class BlobSet implements IDataSetter {
         return new BlobSet(pos, true, new ByteContainer(data));
     }
 
+    public static BlobSet cAppendOnly(int pos, byte[] data) {
+        return new BlobSet(pos, false, new ByteContainer(data));
+    }
+
     public BlobSet(int pos, boolean allowOverwrite, ByteContainer data) {
         if (data.getNumOfBytes() < 1) throw new IllegalArgumentException("data.getNumOfBytes()<1");
         this.pos = pos;
