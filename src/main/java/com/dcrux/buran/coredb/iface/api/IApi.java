@@ -164,8 +164,7 @@ public interface IApi {
      *         The specified (by label and index) edge already exists.
      * @throws IncubationNodeNotFound
      * @see #setEdgeReplace(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
-     * .UserId,
-     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeIndex,
+     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeIndex,
      *      com.dcrux.buran.coredb.iface.EdgeLabel, com.dcrux.buran.coredb.iface.edgeTargets
      *      .IIncEdgeTarget)
      */
@@ -221,8 +220,7 @@ public interface IApi {
      * @param index
      * @throws IncubationNodeNotFound
      * @see #removeEdgeStrict(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
-     * .UserId,
-     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeLabel,
+     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeLabel,
      *      com.dcrux.buran.coredb.iface.EdgeIndex)
      */
     void removeEdge(UserId receiver, UserId sender, IncNid incNid, EdgeLabel label, EdgeIndex index)
@@ -357,7 +355,7 @@ public interface IApi {
      *         The node given by its id was not found.
      */
     @Nullable
-    NidVer getCurrentNodeVersion(UserId receiver, UserId sender, long nid)
+    NidVer getCurrentNodeVersion(UserId receiver, UserId sender, Nid nid)
             throws NodeNotFoundException;
 
     /**
@@ -372,7 +370,7 @@ public interface IApi {
      *         The node given by its id was not found.
      */
     @Nullable
-    NidVer getLatestVersionBeforeDeletion(UserId receiver, UserId sender, long nid)
+    NidVer getLatestVersionBeforeDeletion(UserId receiver, UserId sender, Nid nid)
             throws NodeNotFoundException;
 
     /*********************************************************************************************
