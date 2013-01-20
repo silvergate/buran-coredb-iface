@@ -1,5 +1,6 @@
 package com.dcrux.buran.coredb.iface.query;
 
+import com.dcrux.buran.coredb.iface.nodeClass.ClassId;
 import com.dcrux.buran.coredb.iface.query.nodeMeta.INodeMetaCondition;
 import com.dcrux.buran.coredb.iface.query.propertyCondition.IPropertyCondition;
 import com.google.common.base.Optional;
@@ -10,6 +11,12 @@ import com.google.common.base.Optional;
 public class CondCdNode extends CondNode {
     private final long classId;
     private final Optional<IPropertyCondition> propertyCondition;
+
+
+    public static CondCdNode c(ClassId classId, IPropertyCondition propertyCondition) {
+        return new CondCdNode(Optional.<INodeMetaCondition>absent(), classId.getId(),
+                Optional.<IPropertyCondition>of(propertyCondition));
+    }
 
     public CondCdNode(Optional<INodeMetaCondition> metaCondition, long classId,
             Optional<IPropertyCondition> propertyCondition) {

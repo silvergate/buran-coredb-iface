@@ -30,4 +30,8 @@ public class QueryResult {
     public boolean isHasMoreResults() {
         return hasMoreResults;
     }
+
+    public Optional<Integer> getNumberOfResultsWithoutLimit() {
+        return numberOfResultsWithoutLimit;
+    }
 }

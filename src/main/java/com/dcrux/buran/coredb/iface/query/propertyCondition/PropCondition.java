@@ -12,6 +12,10 @@ public class PropCondition implements IPropertyCondition {
     private final short typeIndex;
     private final ICmp comparator;
 
+    public static PropCondition c(short typeIndex, ICmp comparator) {
+        return new PropCondition(typeIndex, comparator);
+    }
+
     public PropCondition(short typeIndex, ICmp comparator) {
         this.typeIndex = typeIndex;
         this.comparator = comparator;
