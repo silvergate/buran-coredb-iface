@@ -11,6 +11,10 @@ public class McInverse implements INodeMetaCondition {
         this.val = val;
     }
 
+    public static McInverse c(INodeMetaCondition val) {
+        return new McInverse(val);
+    }
+
     public INodeMetaCondition getVal() {
         return val;
     }

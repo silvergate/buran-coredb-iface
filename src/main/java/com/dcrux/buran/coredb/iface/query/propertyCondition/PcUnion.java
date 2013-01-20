@@ -9,6 +9,10 @@ public class PcUnion implements IPropertyCondition {
     private final IPropertyCondition val1;
     private final IPropertyCondition val2;
 
+    public static PcUnion c(IPropertyCondition val1, IPropertyCondition val2) {
+        return new PcUnion(val1, val2);
+    }
+
     public PcUnion(IPropertyCondition val1, IPropertyCondition val2) {
         this.val1 = val1;
         this.val2 = val2;

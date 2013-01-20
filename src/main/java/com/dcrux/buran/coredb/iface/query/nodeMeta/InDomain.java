@@ -12,6 +12,10 @@ public class InDomain implements INodeMetaCondition {
         this.domain = domain;
     }
 
+    public static InDomain c(DomainId domain) {
+        return new InDomain(domain);
+    }
+
     public DomainId getDomain() {
         return domain;
     }

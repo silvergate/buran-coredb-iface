@@ -18,6 +18,11 @@ public class StringEq implements ICmp {
         this.rhs = rhs;
     }
 
+    public static StringEq c(String rhs) {
+        if (rhs == null) throw new IllegalArgumentException("rhs==null");
+        return new StringEq(rhs);
+    }
+
     @Override
     public CmpRef getRef() {
         return REF;

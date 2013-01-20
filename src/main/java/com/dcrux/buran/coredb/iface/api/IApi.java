@@ -15,6 +15,7 @@ import com.google.common.collect.Multimap;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Buran.
@@ -399,6 +400,19 @@ public interface IApi {
      */
     DomainId addOrGetIdentifiedDomain(UserId receiver, UserId sender, DomainHash hash)
             throws PermissionDeniedException;
+
+    void addDomainToNode(UserId receiver, UserId sender, IncNid incNid, DomainId domainId)
+            throws IncubationNodeNotFound, DomainNotFoundException;
+
+    boolean removeDomainFromNode(UserId receiver, UserId sender, IncNid incNid, DomainId domainId)
+            throws IncubationNodeNotFound, DomainNotFoundException;
+
+    int clearDomainsFromNode(UserId receiver, UserId sender, IncNid incNid)
+            throws IncubationNodeNotFound;
+
+    Set<DomainId> getDomains(UserId receiver, UserId sender, NidVer nidVer)
+            throws InformationUnavailableException, PermissionDeniedException,
+            NodeNotFoundException;
 
     /*********************************************************************************************
      * REGION: Subscription API

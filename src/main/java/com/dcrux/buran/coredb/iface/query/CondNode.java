@@ -9,6 +9,10 @@ import com.google.common.base.Optional;
 public class CondNode implements ICondNode {
     private final Optional<INodeMetaCondition> metaCondition;
 
+    public static CondNode c(INodeMetaCondition metaCondition) {
+        return new CondNode(Optional.of(metaCondition));
+    }
+
     public CondNode(Optional<INodeMetaCondition> metaCondition) {
         this.metaCondition = metaCondition;
     }

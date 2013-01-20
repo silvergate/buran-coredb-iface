@@ -6,6 +6,10 @@ package com.dcrux.buran.coredb.iface.query.nodeMeta;
 public class VersionEq implements INodeMetaCondition {
     private final int version;
 
+    public static VersionEq c(int version) {
+        return new VersionEq(version);
+    }
+
     public VersionEq(int version) {
         this.version = version;
     }

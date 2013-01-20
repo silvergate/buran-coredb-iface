@@ -1,5 +1,7 @@
 package com.dcrux.buran.coredb.iface.query.nodeMeta;
 
+import com.dcrux.buran.coredb.iface.UserId;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,6 +12,18 @@ import java.util.Set;
  */
 public class SenderIsIn implements INodeMetaCondition {
     private final Set<Long> userIds;
+
+    public static SenderIsIn c(UserId... userIds) {
+        final Set<Long> userIdsSet = new HashSet<>();
+        for (UserId userId : userIds) {
+            userIdsSet.add(userId.getId());
+        }
+        return new SenderIsIn(userIdsSet);
+    }
+
+    private SenderIsIn(Set<Long> userIdSet) {
+        this.userIds = userIdSet;
+    }
 
     public SenderIsIn(Long... userId) {
         this.userIds = new HashSet<>();

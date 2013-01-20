@@ -18,6 +18,12 @@ public class CondCdNode extends CondNode {
                 Optional.<IPropertyCondition>of(propertyCondition));
     }
 
+    public static CondCdNode c(ClassId classId, INodeMetaCondition metaCondition,
+            IPropertyCondition propertyCondition) {
+        return new CondCdNode(Optional.<INodeMetaCondition>of(metaCondition), classId.getId(),
+                Optional.<IPropertyCondition>of(propertyCondition));
+    }
+
     public CondCdNode(Optional<INodeMetaCondition> metaCondition, long classId,
             Optional<IPropertyCondition> propertyCondition) {
         super(metaCondition);

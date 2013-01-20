@@ -8,6 +8,10 @@ import com.dcrux.buran.coredb.iface.nodeClass.NodeClass;
 public class PcInverse implements IPropertyCondition {
     private final IPropertyCondition val;
 
+    public static PcInverse c(IPropertyCondition val) {
+        return new PcInverse(val);
+    }
+
     public PcInverse(IPropertyCondition val) {
         this.val = val;
     }
