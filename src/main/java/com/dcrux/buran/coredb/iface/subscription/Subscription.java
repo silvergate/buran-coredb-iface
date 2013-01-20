@@ -16,10 +16,11 @@ public class Subscription {
     private final EnumSet<SubscriptionEventType> eventTypes;
     private final ICondNode query;
     private final ISubscriptionEventHandler handler;
+    @Deprecated
     private final boolean weakHandlerReference;
 
     public Subscription(UserId receiver, UserId sender, EnumSet<SubscriptionEventType> eventTypes,
-            ICondNode query, ISubscriptionEventHandler handler, boolean weakHandlerReference) {
+            ICondNode query, ISubscriptionEventHandler handler) {
         if (eventTypes.isEmpty())
             throw new IllegalArgumentException("Need at least one event type.");
         this.receiver = receiver;
@@ -27,7 +28,7 @@ public class Subscription {
         this.eventTypes = eventTypes;
         this.query = query;
         this.handler = handler;
-        this.weakHandlerReference = weakHandlerReference;
+        this.weakHandlerReference = false;
     }
 
     public EnumSet<SubscriptionEventType> getEventTypes() {
@@ -42,6 +43,7 @@ public class Subscription {
         return handler;
     }
 
+    @Deprecated
     public boolean isWeakHandlerReference() {
         return weakHandlerReference;
     }

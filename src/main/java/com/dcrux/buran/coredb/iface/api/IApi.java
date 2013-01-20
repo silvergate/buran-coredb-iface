@@ -401,15 +401,59 @@ public interface IApi {
     DomainId addOrGetIdentifiedDomain(UserId receiver, UserId sender, DomainHash hash)
             throws PermissionDeniedException;
 
+    /**
+     * Assigns a domain the the given node. Does nothing if node is already in domain.
+     *
+     * @param receiver
+     * @param sender
+     * @param incNid
+     * @param domainId
+     * @throws IncubationNodeNotFound
+     * @throws DomainNotFoundException
+     */
     void addDomainToNode(UserId receiver, UserId sender, IncNid incNid, DomainId domainId)
             throws IncubationNodeNotFound, DomainNotFoundException;
 
+    /**
+     * Removes the domain from the given node. Returns <code>true</code> if the domain was assigned
+     * to the node and is now removed. Returns <code>false</code> if the domain was not assigned to
+     * the node.
+     *
+     * @param receiver
+     * @param sender
+     * @param incNid
+     * @param domainId
+     * @return
+     * @throws IncubationNodeNotFound
+     * @throws DomainNotFoundException
+     */
     boolean removeDomainFromNode(UserId receiver, UserId sender, IncNid incNid, DomainId domainId)
             throws IncubationNodeNotFound, DomainNotFoundException;
 
+    /**
+     * Removes all domains from the node.
+     *
+     * @param receiver
+     * @param sender
+     * @param incNid
+     * @return
+     * @throws IncubationNodeNotFound
+     */
     int clearDomainsFromNode(UserId receiver, UserId sender, IncNid incNid)
             throws IncubationNodeNotFound;
 
+    /**
+     * Returns the domains that are assigned to the node.
+     *
+     * @param receiver
+     * @param sender
+     * @param nidVer
+     * @return
+     * @throws InformationUnavailableException
+     *
+     * @throws PermissionDeniedException
+     * @throws NodeNotFoundException
+     */
     Set<DomainId> getDomains(UserId receiver, UserId sender, NidVer nidVer)
             throws InformationUnavailableException, PermissionDeniedException,
             NodeNotFoundException;
