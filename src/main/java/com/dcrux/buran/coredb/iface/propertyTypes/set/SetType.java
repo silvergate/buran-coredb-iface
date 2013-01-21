@@ -17,6 +17,7 @@ public class SetType implements IType {
 
     // TODO: Sort by number of elements
 
+    private static final long serialVersionUID = -3404081053288683247L;
     public static final int MAX_LEN_BYTES = 512;
     public static final int MAX_NUM_OF_ELEMENTS = 512;
 
