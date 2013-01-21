@@ -9,7 +9,12 @@ import com.google.common.base.Optional;
  */
 public class PrivateEdgeClass extends EdgeClass {
 
-    public PrivateEdgeClass(EdgeLabel label, boolean queryable, Optional<ClassId> inEdgeClass,
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 513810653669102016L;
+
+	public PrivateEdgeClass(EdgeLabel label, boolean queryable, Optional<ClassId> inEdgeClass,
             PrivateEdgeConstraints outNodeConstraints) {
         super(label, queryable, inEdgeClass);
         assert (!label.isPublic());
