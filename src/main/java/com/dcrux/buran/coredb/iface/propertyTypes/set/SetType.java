@@ -17,7 +17,7 @@ public class SetType implements IType {
 
     // TODO: Sort by number of elements
 
-    public static final int MAX_LEN_BYTES = 256;
+    public static final int MAX_LEN_BYTES = 512;
     public static final int MAX_NUM_OF_ELEMENTS = 512;
 
     public static final TypeRef REF = new TypeRef((short) 24);

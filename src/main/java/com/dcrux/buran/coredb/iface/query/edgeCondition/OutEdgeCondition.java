@@ -26,14 +26,37 @@ public class OutEdgeCondition implements INodeMetaCondition {
     private final Optional<ICondNode> target;
     private final boolean matchAll;
 
+    public static OutEdgeCondition c(EdgeLabel label) {
+        return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
+                Optional.<ICondNode>absent(), false);
+    }
+
+    public static OutEdgeCondition c(EdgeLabel label, EdgeIndex edgeIndex) {
+        return new OutEdgeCondition(label, Optional.<EdgeIndex>of(edgeIndex),
+                Optional.<ICondNode>absent(), false);
+    }
+
+    public static OutEdgeCondition c(EdgeLabel label, EdgeIndex edgeIndex, ICondNode target) {
+        return new OutEdgeCondition(label, Optional.<EdgeIndex>of(edgeIndex),
+                Optional.<ICondNode>of(target), false);
+    }
+
+    public static OutEdgeCondition all(EdgeLabel label, ICondNode target) {
+        return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
+                Optional.<ICondNode>of(target), true);
+    }
+
     private OutEdgeCondition(EdgeLabel label, Optional<EdgeIndex> index, Optional<ICondNode> target,
             boolean matchAll) {
         this.label = label;
         this.index = index;
         this.target = target;
         this.matchAll = matchAll;
+        if (!target.isPresent() && matchAll) {
+            throw new ExpectableException("If target is missing you cannot set matchAll to true.");
+        }
         if (index.isPresent() && matchAll) {
-            throw new ExpectableException("If index is present, you cannot set matchAll to true.");
+            throw new ExpectableException("If index is present you cannot set matchAll to true.");
         }
     }
 
