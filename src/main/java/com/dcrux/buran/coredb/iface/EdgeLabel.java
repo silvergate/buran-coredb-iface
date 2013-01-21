@@ -7,8 +7,10 @@ import java.text.MessageFormat;
  * @author caelis
  */
 public class EdgeLabel implements Serializable {
+    /**
+	 * 
+	 */
 	private static final long serialVersionUID = 8489172729557334152L;
-	
 	private final String label;
 
     private EdgeLabel(String label) {
