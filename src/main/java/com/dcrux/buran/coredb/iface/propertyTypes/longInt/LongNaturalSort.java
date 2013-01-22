@@ -1,4 +1,4 @@
-package com.dcrux.buran.coredb.iface.propertyTypes.string;
+package com.dcrux.buran.coredb.iface.propertyTypes.longInt;
 
 import com.dcrux.buran.coredb.iface.nodeClass.ISorter;
 import com.dcrux.buran.coredb.iface.nodeClass.SorterRef;
@@ -7,10 +7,10 @@ import com.dcrux.buran.coredb.iface.propertyTypes.SorterRefs;
 /**
  * @author caelis
  */
-public class StringUnicodeSort implements ISorter {
+public class LongNaturalSort implements ISorter {
 
     public static final SorterRef REF = SorterRefs.NATURAL;
-    public static final StringUnicodeSort SINGLETON = new StringUnicodeSort();
+    public static final LongNaturalSort SINGLETON = new LongNaturalSort();
 
     @Override
     public ISorter getSingleton() {
@@ -34,6 +34,6 @@ public class StringUnicodeSort implements ISorter {
         if (o2 == null) {
             return 1;
         }
-        return String.CASE_INSENSITIVE_ORDER.compare((String) o1, (String) o2);
+        return ((Long) o1).compareTo((Long) o2);
     }
 }

@@ -29,6 +29,10 @@ public final class PrimSet implements IDataSetter {
         return new PrimSet(setEntries);
     }
 
+    public static PrimSet binary(byte[] value) {
+        return new PrimSet(value);
+    }
+
     public static PrimSet extinct() {
         return new PrimSet(null);
     }

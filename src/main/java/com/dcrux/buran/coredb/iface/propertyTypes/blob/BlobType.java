@@ -18,16 +18,16 @@ public class BlobType implements IType {
      */
     private static final long serialVersionUID = -2757882164219422526L;
     public static final TypeRef REF = new TypeRef((short) 233);
-    public static int MAX_LENGTH = Integer.MAX_VALUE;
+    public static long MAX_LENGTH = Long.MAX_VALUE;
 
     private final boolean indexed;
-    private final int maxLength; //TODO: Wird noch nicht überprüft
+    private final long maxLength; //TODO: Wird noch nicht überprüft
 
     public static BlobType cIndexed() {
         return new BlobType(MAX_LENGTH, true);
     }
 
-    public BlobType(int maxLength, boolean indexed) {
+    public BlobType(long maxLength, boolean indexed) {
         this.maxLength = maxLength;
         this.indexed = indexed;
     }
