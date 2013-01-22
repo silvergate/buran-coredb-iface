@@ -34,6 +34,6 @@ public class BoolNaturalSort implements ISorter {
         if (o2 == null) {
             return 1;
         }
-        return ((Boolean) o1).compareTo((Boolean) o2);
+        return ((Boolean) o2).compareTo((Boolean) o1);
     }
 }

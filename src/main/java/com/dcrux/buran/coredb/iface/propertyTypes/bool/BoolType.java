@@ -85,7 +85,7 @@ public class BoolType implements IType {
     @Override
     public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
         final PrimSet ds = (PrimSet) dataSetter;
-        final Integer value = (Integer) ds.getValue();
+        final Boolean value = (Boolean) ds.getValue();
         return value;
     }
 

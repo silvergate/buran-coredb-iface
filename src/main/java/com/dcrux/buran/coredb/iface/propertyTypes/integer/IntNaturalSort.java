@@ -34,6 +34,6 @@ public class IntNaturalSort implements ISorter {
         if (o2 == null) {
             return 1;
         }
-        return ((Integer) o1).compareTo((Integer) o2);
+        return ((Integer) o2).compareTo((Integer) o1);
     }
 }

@@ -34,6 +34,6 @@ public class LongNaturalSort implements ISorter {
         if (o2 == null) {
             return 1;
         }
-        return ((Long) o1).compareTo((Long) o2);
+        return ((Long) o2).compareTo((Long) o1);
     }
 }

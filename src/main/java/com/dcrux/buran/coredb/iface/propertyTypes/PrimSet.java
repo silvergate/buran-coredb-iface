@@ -24,12 +24,20 @@ public final class PrimSet implements IDataSetter {
         return new PrimSet(value);
     }
 
+    public static PrimSet longInt(final long value) {
+        return new PrimSet(value);
+    }
+
     public static PrimSet set(Set<ByteContainer> setEntries) {
         if (setEntries == null) throw new IllegalArgumentException("setEntries==null");
         return new PrimSet(setEntries);
     }
 
     public static PrimSet binary(byte[] value) {
+        return new PrimSet(value);
+    }
+
+    public static PrimSet bool(boolean value) {
         return new PrimSet(value);
     }
 

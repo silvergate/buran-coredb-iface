@@ -34,6 +34,6 @@ public class StringUnicodeSort implements ISorter {
         if (o2 == null) {
             return 1;
         }
-        return String.CASE_INSENSITIVE_ORDER.compare((String) o1, (String) o2);
+        return String.CASE_INSENSITIVE_ORDER.compare((String) o2, (String) o1);
     }
 }

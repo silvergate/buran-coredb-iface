@@ -22,6 +22,10 @@ public class PropertySort implements ISorting {
         return sorter;
     }
 
+    public static PropertySort c(short fieldIndex, SorterRef sorter, SortDirection order) {
+        return new PropertySort(fieldIndex, sorter, order);
+    }
+
     public PropertySort(short fieldIndex, SorterRef sorter, SortDirection order) {
         this.fieldIndex = fieldIndex;
         this.order = order;
