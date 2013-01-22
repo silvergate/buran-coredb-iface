@@ -7,11 +7,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class InvalidEdgeTarget extends Exception {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8003266230259442250L;
+     *
+     */
+    private static final long serialVersionUID = -8003266230259442250L;
 
-	public InvalidEdgeTarget(String message) {
+    public InvalidEdgeTarget(String message) {
         super(message);
     }
 }

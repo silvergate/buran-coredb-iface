@@ -1,6 +1,7 @@
 package com.dcrux.buran.coredb.iface;
 
 import javax.annotation.concurrent.ThreadSafe;
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Arrays;
  * @author: ${USER} Date: 04.01.13 Time: 18:05
  */
 @ThreadSafe
-public class ByteContainer {
+public class ByteContainer implements Serializable {
     private volatile byte[] data;
     private boolean sealed;
 

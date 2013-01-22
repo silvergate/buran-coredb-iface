@@ -12,11 +12,11 @@ import javax.annotation.Nullable;
  */
 public class IntType implements IType {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8861115637013126790L;
+     *
+     */
+    private static final long serialVersionUID = 8861115637013126790L;
 
-	public static final TypeRef REF = new TypeRef((short) 22);
+    public static final TypeRef REF = new TypeRef((short) 22);
 
     private final boolean queryAndSortable;
 

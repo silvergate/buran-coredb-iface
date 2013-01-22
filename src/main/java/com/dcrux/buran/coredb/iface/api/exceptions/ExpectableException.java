@@ -5,11 +5,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class ExpectableException extends RuntimeException {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4335493760981611233L;
+     *
+     */
+    private static final long serialVersionUID = 4335493760981611233L;
 
-	public ExpectableException(String message) {
+    public ExpectableException(String message) {
         super(message);
     }
 }

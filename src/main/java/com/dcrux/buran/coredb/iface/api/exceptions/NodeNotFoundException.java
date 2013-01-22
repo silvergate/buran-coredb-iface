@@ -7,11 +7,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class NodeNotFoundException extends Exception {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4781751645402675548L;
+     *
+     */
+    private static final long serialVersionUID = 4781751645402675548L;
 
-	public NodeNotFoundException(String message) {
+    public NodeNotFoundException(String message) {
         super(message);
     }
 }

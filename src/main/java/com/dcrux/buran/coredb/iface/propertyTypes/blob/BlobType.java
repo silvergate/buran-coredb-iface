@@ -14,10 +14,10 @@ import javax.annotation.Nullable;
 public class BlobType implements IType {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2757882164219422526L;
-	public static final TypeRef REF = new TypeRef((short) 233);
+     *
+     */
+    private static final long serialVersionUID = -2757882164219422526L;
+    public static final TypeRef REF = new TypeRef((short) 233);
     public static int MAX_LENGTH = Integer.MAX_VALUE;
 
     private final boolean indexed;

@@ -7,11 +7,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class IncubationNodeNotFound extends Exception {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 307992490632799844L;
+     *
+     */
+    private static final long serialVersionUID = 307992490632799844L;
 
-	public IncubationNodeNotFound(String message) {
+    public IncubationNodeNotFound(String message) {
         super(message);
     }
 }

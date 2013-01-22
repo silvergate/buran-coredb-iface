@@ -7,8 +7,8 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class NodeNotUpdatable extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9157834595947218146L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 9157834595947218146L;
 }

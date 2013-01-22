@@ -11,10 +11,10 @@ import java.io.Serializable;
  */
 public abstract class EdgeClass implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1150929005988155511L;
-	private final EdgeLabel label;
+     *
+     */
+    private static final long serialVersionUID = -1150929005988155511L;
+    private final EdgeLabel label;
     private final boolean queryable;
     private final Optional<ClassId> inEdgeClass;
 

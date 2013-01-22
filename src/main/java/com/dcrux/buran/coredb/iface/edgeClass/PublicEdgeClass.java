@@ -17,10 +17,10 @@ import java.util.UUID;
 public class PublicEdgeClass implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2386374331537960008L;
-	private static final String QA_TRUE = "qt";
+     *
+     */
+    private static final long serialVersionUID = -2386374331537960008L;
+    private static final String QA_TRUE = "qt";
     private static final String QA_FALSE = "qf";
     private static final String CLASSID_ABSENT = "abs";
 

@@ -13,10 +13,10 @@ import java.util.Set;
  */
 public class FtsiType implements IType {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8195205035522839564L;
-	public static final TypeRef REF = new TypeRef((short) 54);
+     *
+     */
+    private static final long serialVersionUID = -8195205035522839564L;
+    public static final TypeRef REF = new TypeRef((short) 54);
 
     @Override
     public TypeRef getRef() {

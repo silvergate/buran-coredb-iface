@@ -7,11 +7,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class EdgeIndexAlreadySet extends Exception {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3436040529314757467L;
+     *
+     */
+    private static final long serialVersionUID = -3436040529314757467L;
 
-	public EdgeIndexAlreadySet(String message) {
+    public EdgeIndexAlreadySet(String message) {
         super(message);
     }
 }

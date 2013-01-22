@@ -11,10 +11,10 @@ import java.util.*;
  */
 public final class NodeClass implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7163989895451951239L;
-	private final IType[] types;
+     *
+     */
+    private static final long serialVersionUID = 7163989895451951239L;
+    private final IType[] types;
     private final Map<String, Short> nameToTypeIndex;
     private final Set<Short> requiredTypes;
     private final Map<EdgeLabel, PrivateEdgeClass> labelsToEdgeClasses;

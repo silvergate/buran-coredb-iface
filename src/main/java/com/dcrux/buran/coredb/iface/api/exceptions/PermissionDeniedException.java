@@ -5,8 +5,8 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class PermissionDeniedException extends UnexpectableException {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1990600648323007579L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1990600648323007579L;
 }

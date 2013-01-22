@@ -1,5 +1,6 @@
 package com.dcrux.buran.coredb.iface.propertyTypes.blob;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @author: ${USER} Date: 18.01.13 Time: 18:20
  */
-public class BinaryBlocks {
+public class BinaryBlocks implements Serializable {
 
     private final int blockSize;
     private int length;

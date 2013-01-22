@@ -7,11 +7,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class NotUpdatingException extends Exception {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7653709718361873323L;
+     *
+     */
+    private static final long serialVersionUID = -7653709718361873323L;
 
-	public NotUpdatingException(String message) {
+    public NotUpdatingException(String message) {
         super(message);
     }
 }

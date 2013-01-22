@@ -7,11 +7,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class HistoryHintNotFulfillable extends Exception {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5025006581941465075L;
+     *
+     */
+    private static final long serialVersionUID = 5025006581941465075L;
 
-	public HistoryHintNotFulfillable(String message) {
+    public HistoryHintNotFulfillable(String message) {
         super(message);
     }
 }

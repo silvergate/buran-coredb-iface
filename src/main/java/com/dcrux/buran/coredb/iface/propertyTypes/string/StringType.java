@@ -13,10 +13,10 @@ import javax.annotation.Nullable;
 public class StringType implements IType {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -5754666614893018322L;
-	public static final TypeRef REF = new TypeRef((short) 1);
+     *
+     */
+    private static final long serialVersionUID = -5754666614893018322L;
+    public static final TypeRef REF = new TypeRef((short) 1);
 
     @Override
     public TypeRef getRef() {

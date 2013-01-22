@@ -152,6 +152,39 @@ public interface IApi {
             IDataSetter dataSetter) throws IncubationNodeNotFound;
 
     /**
+     * Transfers information from one node to another. The source node has the following
+     * requirement: <ul> <li>Must have the same receiver as the target node.</li> <li>If
+     * transferring of properties and/or edges is not excluded the target node must be of the same
+     * class as the source node. </li> </ul>
+     *
+     * @param receiver
+     * @param sender
+     * @param target
+     *         Target node in incubation.
+     * @param src
+     *         Source node (Note: historized nodes are valid too - if readable, see {@link
+     *         NodeState#historizedAvailable} and {@link NodeState#historizedPropertiesMissing}).
+     * @param transferExclusion
+     *         Exclude information from transferring.
+     * @throws IncubationNodeNotFound
+     *         Target node was not found in incubation.
+     * @throws InformationUnavailableException
+     *         Information from the source node is not available because the node has been
+     *         historized and the information is missing.
+     * @throws PermissionDeniedException
+     *         Reading from the source node is denied.
+     * @throws NodeNotFoundException
+     *         The source node was not found.
+     * @throws IncompatibleClassException
+     *         Transferring of properties and/or edges is activated and source and target node are
+     *         not of the same class.
+     */
+    void transferData(UserId receiver, UserId sender, IncNid target, NidVer src,
+            TransferExclusion transferExclusion)
+            throws IncubationNodeNotFound, InformationUnavailableException,
+            PermissionDeniedException, NodeNotFoundException, IncompatibleClassException;
+
+    /**
      * Sets an edge specified by the given label and index to the given target. Fails if an edge
      * specified by label and index already exists.
      *

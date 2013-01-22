@@ -7,11 +7,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
  */
 public class DomainNotFoundException extends Exception {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7655462020916039522L;
+     *
+     */
+    private static final long serialVersionUID = -7655462020916039522L;
 
-	public DomainNotFoundException(String message) {
+    public DomainNotFoundException(String message) {
         super(message);
     }
 }
