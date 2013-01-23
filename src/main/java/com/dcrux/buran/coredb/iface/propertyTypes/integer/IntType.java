@@ -50,6 +50,7 @@ public class IntType implements IType {
     public ISorter getSorter(SorterRef sorterRef) {
         if (!this.indexed) return null;
         if (sorterRef.equals(IntNaturalSort.REF)) return IntNaturalSort.SINGLETON;
+        if (sorterRef.equals(IntNaturalSort.REF_NH)) return IntNaturalSort.SINGLETON_NH;
         return null;
     }
 

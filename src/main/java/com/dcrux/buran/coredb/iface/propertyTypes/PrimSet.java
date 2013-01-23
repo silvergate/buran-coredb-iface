@@ -41,6 +41,10 @@ public final class PrimSet implements IDataSetter {
         return new PrimSet(value);
     }
 
+    public static PrimSet longFloat(double value) {
+        return new PrimSet(value);
+    }
+
     public static PrimSet extinct() {
         return new PrimSet(null);
     }

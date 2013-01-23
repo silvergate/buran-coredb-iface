@@ -1,4 +1,4 @@
-package com.dcrux.buran.coredb.iface.propertyTypes.bool;
+package com.dcrux.buran.coredb.iface.propertyTypes.longFloat;
 
 import com.dcrux.buran.coredb.iface.nodeClass.*;
 import com.dcrux.buran.coredb.iface.propertyTypes.Exists;
@@ -10,34 +10,30 @@ import javax.annotation.Nullable;
 /**
  * @author caelis
  */
-public class BoolType implements IType {
+public class LongFloatType implements IType {
     /**
      *
      */
     private static final long serialVersionUID = 8861115637013126790L;
 
-    public static final TypeRef REF = new TypeRef((short) 11023);
+    public static final TypeRef REF = new TypeRef((short) 15002);
 
     private final boolean indexed;
 
-    public BoolType(boolean indexed) {
+    public LongFloatType(boolean indexed) {
         this.indexed = indexed;
     }
 
-    public BoolType() {
+    public LongFloatType() {
         this(false);
     }
 
-    public static BoolType c() {
-        return new BoolType();
+    public static LongFloatType c() {
+        return new LongFloatType();
     }
 
-    public static BoolType indexed() {
-        return new BoolType(true);
-    }
-
-    public boolean isIndexed() {
-        return indexed;
+    public static LongFloatType cIndexed() {
+        return new LongFloatType(true);
     }
 
     @Override
@@ -49,15 +45,15 @@ public class BoolType implements IType {
     @Override
     public ISorter getSorter(SorterRef sorterRef) {
         if (!this.indexed) return null;
-        if (sorterRef.equals(BoolNaturalSort.REF)) return BoolNaturalSort.SINGLETON;
-        if (sorterRef.equals(BoolNaturalSort.REF_NH)) return BoolNaturalSort.SINGLETON_NH;
+        if (sorterRef.equals(LongFloatSort.REF)) return LongFloatSort.SINGLETON;
+        if (sorterRef.equals(LongFloatSort.REF_NH)) return LongFloatSort.SINGLETON_NH;
         return null;
     }
 
     @Override
     public boolean supports(CmpRef comparator) {
         if (!this.indexed) return false;
-        if (comparator.equals(BoolEq.REF)) {
+        if (comparator.equals(LongFloatEq.REF)) {
             return true;
         }
         if (comparator.equals(Exists.REF)) return true;
@@ -69,7 +65,7 @@ public class BoolType implements IType {
         if (dataSetter.getClass().equals(PrimSet.class)) {
             final PrimSet ps = (PrimSet) dataSetter;
             if (ps.getValue() == null) return true;
-            return ps.getValue() instanceof Boolean;
+            return ps.getValue() instanceof Double;
         }
         return false;
     }
@@ -86,13 +82,13 @@ public class BoolType implements IType {
     @Override
     public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
         final PrimSet ds = (PrimSet) dataSetter;
-        final Boolean value = (Boolean) ds.getValue();
+        final Double value = (Double) ds.getValue();
         return value;
     }
 
     @Nullable
     @Override
     public Object getData(IDataGetter dataGetter, @Nullable Object value) {
-        return (Boolean) value;
+        return (Double) value;
     }
 }

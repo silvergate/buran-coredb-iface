@@ -43,6 +43,8 @@ public class BlobType implements IType {
         if (!this.indexed) return null;
         if (sorterRef.getRef() == NaturalLengthSort.REF.getRef())
             return NaturalLengthSort.SINGLETON;
+        if (sorterRef.getRef() == NaturalLengthSort.REF_NH.getRef())
+            return NaturalLengthSort.SINGLETON_NH;
         return null;
     }
 

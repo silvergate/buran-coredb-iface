@@ -52,9 +52,12 @@ public class StringType implements IType {
     @Nullable
     @Override
     public ISorter getSorter(SorterRef sorterRef) {
-        if (sorterRef
-                .equals(com.dcrux.buran.coredb.iface.propertyTypes.string.StringUnicodeSort.REF)) {
-            return StringUnicodeSort.SINGLETON;
+        if (!this.indexed) return null;
+        if (sorterRef.equals(StringSort.REF)) {
+            return StringSort.SINGLETON;
+        }
+        if (sorterRef.equals(StringSort.REF_NH)) {
+            return StringSort.SINGLETON_NH;
         }
         return null;
     }

@@ -46,6 +46,7 @@ public class LongType implements IType {
     public ISorter getSorter(SorterRef sorterRef) {
         if (!this.queryAndSortable) return null;
         if (sorterRef.equals(LongNaturalSort.REF)) return LongNaturalSort.SINGLETON;
+        if (sorterRef.equals(LongNaturalSort.REF_NH)) return LongNaturalSort.SINGLETON_NH;
         return null;
     }
 
