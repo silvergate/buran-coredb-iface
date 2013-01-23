@@ -18,10 +18,10 @@ public class LongType implements IType {
 
     public static final TypeRef REF = new TypeRef((short) 9543);
 
-    private final boolean queryAndSortable;
+    private final boolean indexed;
 
-    public LongType(boolean queryAndSortable) {
-        this.queryAndSortable = queryAndSortable;
+    public LongType(boolean indexed) {
+        this.indexed = indexed;
     }
 
     public LongType() {
@@ -32,7 +32,7 @@ public class LongType implements IType {
         return new LongType();
     }
 
-    public static LongType cQueryable() {
+    public static LongType indexed() {
         return new LongType(true);
     }
 
@@ -44,7 +44,7 @@ public class LongType implements IType {
     @Nullable
     @Override
     public ISorter getSorter(SorterRef sorterRef) {
-        if (!this.queryAndSortable) return null;
+        if (!this.indexed) return null;
         if (sorterRef.equals(LongNaturalSort.REF)) return LongNaturalSort.SINGLETON;
         if (sorterRef.equals(LongNaturalSort.REF_NH)) return LongNaturalSort.SINGLETON_NH;
         return null;
@@ -52,7 +52,7 @@ public class LongType implements IType {
 
     @Override
     public boolean supports(CmpRef comparator) {
-        if (!this.queryAndSortable) return false;
+        if (!this.indexed) return false;
         if (comparator.equals(LongEq.REF)) {
             return true;
         }

@@ -13,7 +13,7 @@ import java.util.List;
 public class BinaryBlocks implements Serializable {
 
     private final int blockSize;
-    private int length;
+    private long length;
     private List<byte[]> blocks = new ArrayList<>();
     public static final int DEFAULT_BLOCK_SIZE = 32768;
 
@@ -26,46 +26,46 @@ public class BinaryBlocks implements Serializable {
     }
 
     private static class BlockInfo {
-        private final int blockNumber;
-        private final int blockOffset;
+        private final long blockNumber;
+        private final long blockOffset;
 
-        private BlockInfo(int blockNumber, int blockOffset) {
+        private BlockInfo(long blockNumber, long blockOffset) {
             this.blockNumber = blockNumber;
             this.blockOffset = blockOffset;
         }
 
-        public int getBlockNumber() {
+        public long getBlockNumber() {
             return blockNumber;
         }
 
-        public int getBlockOffset() {
+        public long getBlockOffset() {
             return blockOffset;
         }
     }
 
-    public int getLength() {
+    public long getLength() {
         return length;
     }
 
-    private BlockInfo calcBlockInfo(int position) {
+    private BlockInfo calcBlockInfo(long position) {
         if (position == -1) {
             return new BlockInfo(-1, 0);
         }
-        int block = position / this.blockSize;
-        int offset = position - (this.blockSize * block);
+        long block = position / this.blockSize;
+        long offset = position - (this.blockSize * block);
         return new BlockInfo(block, offset);
     }
 
-    private byte[] readInt(int fromIndex, int toIndex) {
-        final byte[] dest = new byte[(toIndex - fromIndex) + 1];
+    private byte[] readInt(long fromIndex, long toIndex) {
+        final byte[] dest = new byte[(int) (toIndex - fromIndex) + 1];
 
         BlockInfo fromBlock = calcBlockInfo(fromIndex);
         BlockInfo toBlock = calcBlockInfo(toIndex);
-        int destIndex = 0;
-        for (int blockIndex = fromBlock.getBlockNumber(); blockIndex <= toBlock.getBlockNumber();
+        long destIndex = 0;
+        for (long blockIndex = fromBlock.getBlockNumber(); blockIndex <= toBlock.getBlockNumber();
              blockIndex++) {
-            int from = 0;
-            int to = this.blockSize - 1;
+            long from = 0;
+            long to = this.blockSize - 1;
             if (blockIndex == fromBlock.getBlockNumber()) {
                 /* First block */
                 from = fromBlock.getBlockOffset();
@@ -75,29 +75,29 @@ public class BinaryBlocks implements Serializable {
                 to = toBlock.getBlockOffset();
             }
 
-            final byte[] srcBlock = this.blocks.get(blockIndex);
-            System.arraycopy(srcBlock, from, dest, destIndex, (to - from) + 1);
+            final byte[] srcBlock = this.blocks.get((int) blockIndex);
+            System.arraycopy(srcBlock, (int) from, dest, (int) destIndex, (int) (to - from) + 1);
 
             destIndex = destIndex + (to - from);
         }
         return dest;
     }
 
-    public byte[] read(int fromIndex, int toIndex) {
+    public byte[] read(long fromIndex, long toIndex) {
         if (toIndex < fromIndex) throw new IllegalArgumentException("toIndex<fromIndex");
         if (toIndex >= this.length) throw new IllegalArgumentException("toIndex>=this.length");
         return readInt(fromIndex, toIndex);
     }
 
-    private void append(byte[] data, int dataOffset) {
-        int dataLength = data.length - dataOffset;
+    private void append(byte[] data, long dataOffset) {
+        long dataLength = data.length - dataOffset;
         BlockInfo fromBlock = calcBlockInfo(this.length);
         BlockInfo toBlock = calcBlockInfo((this.length + dataLength) - 1);
-        int srcIndex = dataOffset;
-        for (int blockIndex = fromBlock.getBlockNumber(); blockIndex <= toBlock.getBlockNumber();
+        long srcIndex = dataOffset;
+        for (long blockIndex = fromBlock.getBlockNumber(); blockIndex <= toBlock.getBlockNumber();
              blockIndex++) {
-            int from = 0;
-            int to = this.blockSize - 1;
+            long from = 0;
+            long to = this.blockSize - 1;
             if (blockIndex == fromBlock.getBlockNumber()) {
                 /* First block */
                 from = fromBlock.getBlockOffset();
@@ -111,31 +111,31 @@ public class BinaryBlocks implements Serializable {
             if (this.blocks.size() <= blockIndex) {
                 /* We need a new block */
                 destBlock = new byte[this.blockSize];
-                this.blocks.add(blockIndex, destBlock);
+                this.blocks.add((int) blockIndex, destBlock);
 
             } else {
-                destBlock = this.blocks.get(blockIndex);
+                destBlock = this.blocks.get((int) blockIndex);
             }
 
             System.out.println(MessageFormat
                     .format("{0}:{1}:{2}:{3}:{4}", data, srcIndex, destBlock, from,
                             (to - from) + 1));
-            System.arraycopy(data, srcIndex, destBlock, from, (to - from) + 1);
+            System.arraycopy(data, (int) srcIndex, destBlock, (int) from, (int) (to - from) + 1);
 
             srcIndex = srcIndex + (to - from);
         }
         this.length = this.length + dataLength;
     }
 
-    private void replace(int destIndex, byte[] src, int srcOffset, int length) {
+    private void replace(int destIndex, byte[] src, int srcOffset, long length) {
         BlockInfo fromBlock = calcBlockInfo(destIndex);
         BlockInfo toBlock = calcBlockInfo((destIndex + length) - 1);
 
-        int srcIndex = srcOffset;
-        for (int blockIndex = fromBlock.getBlockNumber(); blockIndex <= toBlock.getBlockNumber();
+        long srcIndex = srcOffset;
+        for (long blockIndex = fromBlock.getBlockNumber(); blockIndex <= toBlock.getBlockNumber();
              blockIndex++) {
-            int from = 0;
-            int to = this.blockSize - 1;
+            long from = 0;
+            long to = this.blockSize - 1;
             if (blockIndex == fromBlock.getBlockNumber()) {
                 /* First block */
                 from = fromBlock.getBlockOffset();
@@ -145,8 +145,8 @@ public class BinaryBlocks implements Serializable {
                 to = toBlock.getBlockOffset();
             }
 
-            final byte[] destBlock = this.blocks.get(blockIndex);
-            System.arraycopy(src, srcIndex, destBlock, from, (to - from) + 1);
+            final byte[] destBlock = this.blocks.get((int) blockIndex);
+            System.arraycopy(src, (int) srcIndex, destBlock, (int) from, (int) (to - from) + 1);
 
             srcIndex = srcIndex + (to - from);
         }
@@ -156,7 +156,7 @@ public class BinaryBlocks implements Serializable {
         final boolean needsOverwrite = (targetIndex < this.length);
         if (needsOverwrite && (!allowReplace)) return false;
 
-        final int overwriteLen;
+        final long overwriteLen;
         /* Replace */
         if (needsOverwrite) {
             overwriteLen = (this.length - targetIndex);
@@ -173,18 +173,18 @@ public class BinaryBlocks implements Serializable {
         return true;
     }
 
-    private void cropBytesInt(int numBytes) {
+    private void cropBytesInt(long numBytes) {
         BlockInfo oldBlock = calcBlockInfo(this.length - 1);
         this.length = this.length - numBytes;
         BlockInfo newBlock = calcBlockInfo(this.length - 1);
 
-        for (int removeBlock = oldBlock.getBlockNumber(); removeBlock > newBlock.getBlockNumber();
+        for (long removeBlock = oldBlock.getBlockNumber(); removeBlock > newBlock.getBlockNumber();
              removeBlock--) {
-            this.blocks.remove(removeBlock);
+            this.blocks.remove((int) removeBlock);
         }
     }
 
-    public void cropBytes(int numBytes) {
+    public void cropBytes(long numBytes) {
         if (numBytes > this.length) throw new IllegalArgumentException("numBytes>this.length");
         cropBytesInt(numBytes);
     }

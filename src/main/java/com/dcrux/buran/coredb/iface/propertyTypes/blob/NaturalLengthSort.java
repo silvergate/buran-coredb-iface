@@ -35,6 +35,6 @@ public class NaturalLengthSort implements ISorter {
         }
         BlobData d1 = (BlobData) o1;
         BlobData d2 = (BlobData) o2;
-        return ((Integer) d1.getLength()).compareTo((Integer) d2.getLength());
+        return ((Long) d1.getLength()).compareTo((Long) d2.getLength());
     }
 }

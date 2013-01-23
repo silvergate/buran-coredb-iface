@@ -32,7 +32,7 @@ public class LongFloatType implements IType {
         return new LongFloatType();
     }
 
-    public static LongFloatType cIndexed() {
+    public static LongFloatType indexed() {
         return new LongFloatType(true);
     }
 

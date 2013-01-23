@@ -27,7 +27,7 @@ public class SetType implements IType {
     private final int maxLenOfBytes;
     private final boolean queryable;
 
-    public static SetType cMaxQueryable() {
+    public static SetType indexed(int maxNumOfElements, int maxElementLength) {
         return new SetType(MAX_NUM_OF_ELEMENTS, MAX_LEN_BYTES, true);
     }
 

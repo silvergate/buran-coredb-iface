@@ -14,7 +14,7 @@ public final class BlobData implements Serializable {
         this.data = data;
     }
 
-    public int getLength() {
+    public long getLength() {
         return this.data.getLength();
     }
 

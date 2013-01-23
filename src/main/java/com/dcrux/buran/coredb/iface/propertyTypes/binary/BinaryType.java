@@ -26,20 +26,24 @@ public class BinaryType implements IType {
         return REF;
     }
 
-    private final boolean equalsQuery;
+    private final boolean indexed;
     private final short maxLen;
     private final short minLen;
 
-    public boolean isEqualsQuery() {
-        return equalsQuery;
+    public boolean isIndexed() {
+        return indexed;
     }
 
-    public static BinaryType c() {
-        return new BinaryType((short) 0, MAX_LEN, true);
+    public static BinaryType indexed(int maxLen) {
+        return new BinaryType((short) 0, (short) maxLen, true);
     }
 
-    public BinaryType(short minLen, short maxLen, boolean equalsQuery) {
-        this.equalsQuery = equalsQuery;
+    public static BinaryType c(int maxLen) {
+        return new BinaryType((short) 0, (short) maxLen, false);
+    }
+
+    public BinaryType(short minLen, short maxLen, boolean indexed) {
+        this.indexed = indexed;
         if (maxLen > MAX_LEN) throw new IllegalArgumentException("maxLen>MAX_LEN");
         this.maxLen = maxLen;
         this.minLen = minLen;
@@ -61,10 +65,10 @@ public class BinaryType implements IType {
 
     @Override
     public boolean supports(CmpRef comparator) {
-        if (this.equalsQuery && (comparator.equals(BinaryEq.REF))) {
+        if (this.indexed && (comparator.equals(BinaryEq.REF))) {
             return true;
         }
-        if (this.equalsQuery && (comparator.equals(Exists.REF))) return true;
+        if (this.indexed && (comparator.equals(Exists.REF))) return true;
         return false;
     }
 

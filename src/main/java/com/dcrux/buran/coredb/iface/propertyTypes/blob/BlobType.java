@@ -24,8 +24,8 @@ public class BlobType implements IType {
     private final boolean indexed;
     private final long maxLength;
 
-    public static BlobType cIndexed() {
-        return new BlobType(MAX_LENGTH, true);
+    public static BlobType indexed(long maxLength) {
+        return new BlobType(maxLength, true);
     }
 
     public BlobType(long maxLength, boolean indexed) {
@@ -73,38 +73,63 @@ public class BlobType implements IType {
     @Nullable
     @Override
     public Object setData(IDataSetter dataSetter, @Nullable Object currentValue) {
-        final BlobSet setter = (BlobSet) dataSetter;
-        final BlobData data;
-        if (currentValue != null) data = (BlobData) currentValue;
-        else data = new BlobData(new BinaryBlocks());
+        if (dataSetter instanceof BlobSet) {
+            final BlobSet setter = (BlobSet) dataSetter;
+            final BlobData data;
+            if (currentValue != null) data = (BlobData) currentValue;
+            else data = new BlobData(new BinaryBlocks());
 
         /* Set data */
-        final int pos = setter.getPos();
-        if (pos > data.getLength()) throw new ExpectableException(
-                "Position in data setter is higher than latest byte in " +
-                        "blob. A blob does not support gaps.");
-        if (!setter.isAllowOverwrite()) {
-            if ((pos < data.getLength()) && (setter.getData().getNumOfBytes() > 0)) {
-                throw new ExpectableException("The given position lies inside existing data. The " +
-                        "command would overwrite existing data. Aborting.");
+            final int pos = setter.getPos();
+            if (pos > data.getLength()) throw new ExpectableException(
+                    "Position in data setter is higher than latest byte in " +
+                            "blob. A blob does not support gaps.");
+            if (!setter.isAllowOverwrite()) {
+                if ((pos < data.getLength()) && (setter.getData().getNumOfBytes() > 0)) {
+                    throw new ExpectableException(
+                            "The given position lies inside existing data. The " +
+                                    "command would overwrite existing data. Aborting.");
+                }
             }
-        }
 
         /* Check maximum length */
-        final int currentLen = data.getLength();
-        final int overlapping = data.getLength() - pos;
-        final int newLen = currentLen + setter.getData().getNumOfBytes() - overlapping;
-        if (newLen > this.maxLength) {
-            throw new ExpectableException(MessageFormat.format("This blob supports at max {0}. " +
-                    "After the operation the blow would grow to {1} bytes.", this.maxLength,
-                    newLen));
+            final long currentLen = data.getLength();
+            final long overlapping = data.getLength() - pos;
+            final long newLen = currentLen + setter.getData().getNumOfBytes() - overlapping;
+            if (newLen > this.maxLength) {
+                throw new ExpectableException(MessageFormat
+                        .format("This blob supports at max {0}. " +
+                                "After the operation the blow would grow to {1} bytes.",
+                                this.maxLength, newLen));
+            }
+
+            final boolean written =
+                    data.getData().setData(setter.getPos(), setter.getData().getData(), true);
+            if (!written) throw new IllegalStateException("Should not happen!");
+
+            return data;
         }
 
-        final boolean written =
-                data.getData().setData(setter.getPos(), setter.getData().getData(), true);
-        if (!written) throw new IllegalStateException("Should not happen!");
+        if (dataSetter instanceof BlobTruncate) {
+            final BlobTruncate blobTruncate = (BlobTruncate) dataSetter;
+            final BlobData data;
+            if (currentValue != null) data = (BlobData) currentValue;
+            else data = null;
+            if (blobTruncate.getNumberOfBytes().isPresent() && (data == null)) {
+                throw new ExpectableException("The blob property is missing. Cannot perform a " +
+                        "truncate with defined length on a missing type");
+            }
 
-        return data;
+            if (data == null) {
+                /* Do nothing */
+                return null;
+            }
+
+            /* Truncate */
+            data.getData().cropBytes(blobTruncate.getNumberOfBytes().get());
+        }
+
+        throw new ExpectableException("Unsupported data setter.");
     }
 
     @Nullable
@@ -122,7 +147,7 @@ public class BlobType implements IType {
         if (dataGetter instanceof BlobGet) {
             final BlobGet blobGet = (BlobGet) dataGetter;
             if (data == null) throw new ExpectableException("Blob is empty");
-            int toIndex = blobGet.getSkip() + blobGet.getLength() - 1;
+            long toIndex = blobGet.getSkip() + blobGet.getLength() - 1;
             if (toIndex >= data.getLength()) {
                 /* We need to shorten */
                 if (blobGet.isStrictLength()) {
