@@ -36,7 +36,8 @@ public interface IApi {
      * @return
      * @throws PermissionDeniedException
      */
-    NodeClassHash declareClass(NodeClass nodeClass) throws PermissionDeniedException;
+    NodeClassHash declareClass(NodeClass nodeClass)
+            throws PermissionDeniedException, QuotaExceededException;
 
     /**
      * Gets the class-id given a class-hash. The class-id is specific to a buran server instance.
@@ -47,7 +48,7 @@ public interface IApi {
      *         {@link #declareClass(com.dcrux.buran.coredb.iface.nodeClass.NodeClass)} first.
      */
     @Nullable
-    ClassId getClassIdByHash(NodeClassHash hash);
+    ClassId getClassIdByHash(NodeClassHash hash) throws QuotaExceededException;
 
     /*********************************************************************************************
      * REGION: Create and commit
@@ -63,7 +64,8 @@ public interface IApi {
      * @return
      */
     CreateInfo createNew(UserId receiver, UserId sender, ClassId classId,
-            Optional<KeepAliveHint> keepAliveHint) throws PermissionDeniedException;
+            Optional<KeepAliveHint> keepAliveHint)
+            throws PermissionDeniedException, QuotaExceededException;
 
     /**
      * Creates a new node in incubation. The created node will update the existing node given by
@@ -85,7 +87,8 @@ public interface IApi {
     CreateInfoUpdate createNewUpdate(UserId receiver, UserId sender,
             Optional<KeepAliveHint> keepAliveHint, NidVer nodeToUpdate,
             Optional<HistoryHint> historyHint)
-            throws NodeNotUpdatable, PermissionDeniedException, HistoryHintNotFulfillable;
+            throws NodeNotUpdatable, PermissionDeniedException, HistoryHintNotFulfillable,
+            QuotaExceededException;
 
     /**
      * Commits one or more nodes from incubation. This method works atomic.
@@ -100,7 +103,8 @@ public interface IApi {
      * @throws IncubationNodeNotFound
      */
     CommitResult commit(UserId receiver, UserId sender, IncNid... incNid)
-            throws OptimisticLockingException, PermissionDeniedException, IncubationNodeNotFound;
+            throws OptimisticLockingException, PermissionDeniedException, IncubationNodeNotFound,
+            QuotaExceededException;
 
     /**
      * Extends the keep alive time of a node in incubation.
@@ -115,7 +119,7 @@ public interface IApi {
      *         Is thrown if at least one node cannot be found.
      */
     KeepAliveInfo keepAlive(UserId receiver, UserId sender, KeepAliveHint keepAliveHint,
-            IncNid... incNid) throws IncubationNodeNotFound;
+            IncNid... incNid) throws IncubationNodeNotFound, QuotaExceededException;
 
     /**
      * Removed one or more nodes from incubation without committing. Continues with execution if
@@ -129,7 +133,7 @@ public interface IApi {
      *         nodes).
      */
     void cancelIncubationNode(UserId receiver, UserId sender, IncNid... incNid)
-            throws IncubationNodeNotFound;
+            throws IncubationNodeNotFound, QuotaExceededException;
 
     /*********************************************************************************************
      * REGION: Data manipulation
@@ -149,7 +153,7 @@ public interface IApi {
      * @throws IncubationNodeNotFound
      */
     void setData(UserId receiver, UserId sender, IncNid incNid, short typeIndex,
-            IDataSetter dataSetter) throws IncubationNodeNotFound;
+            IDataSetter dataSetter) throws IncubationNodeNotFound, QuotaExceededException;
 
     /**
      * Transfers information from one node to another. The source node has the following
@@ -182,7 +186,8 @@ public interface IApi {
     void transferData(UserId receiver, UserId sender, IncNid target, NidVer src,
             TransferExclusion transferExclusion)
             throws IncubationNodeNotFound, InformationUnavailableException,
-            PermissionDeniedException, NodeNotFoundException, IncompatibleClassException;
+            PermissionDeniedException, NodeNotFoundException, IncompatibleClassException,
+            QuotaExceededException;
 
     /**
      * Sets an edge specified by the given label and index to the given target. Fails if an edge
@@ -203,7 +208,8 @@ public interface IApi {
      *      .IIncEdgeTarget)
      */
     void setEdge(UserId receiver, UserId sender, IncNid incNid, EdgeIndex index, EdgeLabel label,
-            IIncEdgeTarget target) throws EdgeIndexAlreadySet, IncubationNodeNotFound;
+            IIncEdgeTarget target)
+            throws EdgeIndexAlreadySet, IncubationNodeNotFound, QuotaExceededException;
 
     /**
      * Sets an edge specified by the given label and index to the given target. Will replace an
@@ -222,7 +228,8 @@ public interface IApi {
      *      .IIncEdgeTarget)
      */
     void setEdgeReplace(UserId receiver, UserId sender, IncNid incNid, EdgeIndex index,
-            EdgeLabel label, IIncEdgeTarget target) throws IncubationNodeNotFound;
+            EdgeLabel label, IIncEdgeTarget target)
+            throws IncubationNodeNotFound, QuotaExceededException;
 
     /**
      * Removes a single edge by given label an index. Throws {@link EdgeIndexNotSet} if the
@@ -241,7 +248,7 @@ public interface IApi {
      *      com.dcrux.buran.coredb.iface.EdgeIndex)
      */
     void removeEdgeStrict(UserId receiver, UserId sender, IncNid incNid, EdgeLabel label,
-            EdgeIndex index) throws EdgeIndexNotSet, IncubationNodeNotFound;
+            EdgeIndex index) throws EdgeIndexNotSet, IncubationNodeNotFound, QuotaExceededException;
 
     /**
      * Removes a single edge by given label and index. Does nothing if the specified edge does not
@@ -258,7 +265,7 @@ public interface IApi {
      *      com.dcrux.buran.coredb.iface.EdgeIndex)
      */
     void removeEdge(UserId receiver, UserId sender, IncNid incNid, EdgeLabel label, EdgeIndex index)
-            throws IncubationNodeNotFound;
+            throws IncubationNodeNotFound, QuotaExceededException;
 
     /**
      * Removes all out edges with the specified label (if a label is given) or all edges (if no
@@ -271,7 +278,7 @@ public interface IApi {
      * @throws IncubationNodeNotFound
      */
     void removeEdges(UserId receiver, UserId sender, IncNid incNid, Optional<EdgeLabel> label)
-            throws IncubationNodeNotFound;
+            throws IncubationNodeNotFound, QuotaExceededException;
 
     /**
      * Marks a node as deleted. All other manipulations on this node in incubation have no effect.
@@ -287,7 +294,7 @@ public interface IApi {
      *         If called on a node not updating another node.
      */
     void markNodeAsDeleted(UserId receiver, UserId sender, IncNid incNid)
-            throws IncubationNodeNotFound, NotUpdatingException;
+            throws IncubationNodeNotFound, NotUpdatingException, QuotaExceededException;
 
     /*********************************************************************************************
      * REGION: Data read api
@@ -314,7 +321,7 @@ public interface IApi {
     Object getData(UserId receiver, UserId sender, NidVer nidVersion, short typeIndex,
             IDataGetter dataGetter)
             throws InformationUnavailableException, PermissionDeniedException,
-            NodeNotFoundException;
+            NodeNotFoundException, QuotaExceededException;
 
     /**
      * Gets out-edges from a node. Can optionally be filtered by label and public and private
@@ -336,7 +343,7 @@ public interface IApi {
     Map<EdgeLabel, Map<EdgeIndex, Edge>> getOutEdges(UserId receiver, UserId sender, NidVer nid,
             EnumSet<EdgeType> types, Optional<EdgeLabel> label)
             throws NodeNotFoundException, InformationUnavailableException,
-            PermissionDeniedException;
+            PermissionDeniedException, QuotaExceededException;
 
     /**
      * Gets in-edges from a node. Can optionally be filtered by label and public and private edges.
@@ -357,7 +364,7 @@ public interface IApi {
     Map<EdgeLabel, Multimap<EdgeIndex, EdgeWithSource>> getInEdges(UserId receiver, UserId sender,
             NidVer nid, EnumSet<EdgeType> types, Optional<EdgeLabel> label)
             throws NodeNotFoundException, InformationUnavailableException,
-            PermissionDeniedException;
+            PermissionDeniedException, QuotaExceededException;
 
     /*********************************************************************************************
      * REGION: Meta-Data read api
@@ -375,7 +382,7 @@ public interface IApi {
      * @throws PermissionDeniedException
      */
     NodeState getNodeState(UserId receiver, UserId sender, NidVer nid)
-            throws NodeNotFoundException, PermissionDeniedException;
+            throws NodeNotFoundException, PermissionDeniedException, QuotaExceededException;
 
     /**
      * Returns the current version of the node specified by its id.
@@ -390,7 +397,7 @@ public interface IApi {
      */
     @Nullable
     NidVer getCurrentNodeVersion(UserId receiver, UserId sender, Nid nid)
-            throws NodeNotFoundException;
+            throws NodeNotFoundException, QuotaExceededException;
 
     /**
      * Returns the latest version of a deleted node.
@@ -405,7 +412,7 @@ public interface IApi {
      */
     @Nullable
     NidVer getLatestVersionBeforeDeletion(UserId receiver, UserId sender, Nid nid)
-            throws NodeNotFoundException;
+            throws NodeNotFoundException, QuotaExceededException;
 
     /*********************************************************************************************
      * REGION: Domain API
@@ -419,7 +426,8 @@ public interface IApi {
      * @return
      * @throws PermissionDeniedException
      */
-    DomainId addAnonymousDomain(UserId receiver, UserId sender) throws PermissionDeniedException;
+    DomainId addAnonymousDomain(UserId receiver, UserId sender)
+            throws PermissionDeniedException, QuotaExceededException;
 
     /**
      * Creates a new domain identified by a hash (if non-existent) - or does nothing (if existent).
@@ -432,7 +440,7 @@ public interface IApi {
      * @throws PermissionDeniedException
      */
     DomainId addOrGetIdentifiedDomain(UserId receiver, UserId sender, DomainHash hash)
-            throws PermissionDeniedException;
+            throws PermissionDeniedException, QuotaExceededException;
 
     /**
      * Assigns a domain the the given node. Does nothing if node is already in domain.
@@ -445,7 +453,7 @@ public interface IApi {
      * @throws DomainNotFoundException
      */
     void addDomainToNode(UserId receiver, UserId sender, IncNid incNid, DomainId domainId)
-            throws IncubationNodeNotFound, DomainNotFoundException;
+            throws IncubationNodeNotFound, DomainNotFoundException, QuotaExceededException;
 
     /**
      * Removes the domain from the given node. Returns <code>true</code> if the domain was assigned
@@ -461,7 +469,7 @@ public interface IApi {
      * @throws DomainNotFoundException
      */
     boolean removeDomainFromNode(UserId receiver, UserId sender, IncNid incNid, DomainId domainId)
-            throws IncubationNodeNotFound, DomainNotFoundException;
+            throws IncubationNodeNotFound, DomainNotFoundException, QuotaExceededException;
 
     /**
      * Removes all domains from the node.
@@ -473,7 +481,7 @@ public interface IApi {
      * @throws IncubationNodeNotFound
      */
     int clearDomainsFromNode(UserId receiver, UserId sender, IncNid incNid)
-            throws IncubationNodeNotFound;
+            throws IncubationNodeNotFound, QuotaExceededException;
 
     /**
      * Returns the domains that are assigned to the node.
@@ -489,7 +497,7 @@ public interface IApi {
      */
     Set<DomainId> getDomains(UserId receiver, UserId sender, NidVer nidVer)
             throws InformationUnavailableException, PermissionDeniedException,
-            NodeNotFoundException;
+            NodeNotFoundException, QuotaExceededException;
 
     /*********************************************************************************************
      * REGION: Subscription API
@@ -502,7 +510,7 @@ public interface IApi {
      * @return
      */
     SubscriptionId addSubscription(final Subscription subscription)
-            throws PermissionDeniedException;
+            throws PermissionDeniedException, QuotaExceededException;
 
     /**
      * Removes a subscription.
@@ -512,7 +520,7 @@ public interface IApi {
      *         <code>false</code> if the subscription was not found.
      */
     boolean removeSubscription(UserId receiver, UserId sender, final SubscriptionId subscriptionId)
-            throws PermissionDeniedException;
+            throws PermissionDeniedException, QuotaExceededException;
 
     /*********************************************************************************************
      * REGION: Query API
@@ -532,5 +540,6 @@ public interface IApi {
      *         cannot be queried (those nodes are filtered from the result-set).
      */
     QueryResult query(UserId receiverId, UserId senderId, IQuery query,
-            boolean countNumberOfResultsWithoutLimit) throws PermissionDeniedException;
+            boolean countNumberOfResultsWithoutLimit)
+            throws PermissionDeniedException, QuotaExceededException;
 }

@@ -7,7 +7,7 @@ import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
  */
 public class EdgeWithSource {
     private final Edge edge;
-    private IEdgeTarget source;
+    private final IEdgeTarget source;
 
     public EdgeWithSource(Edge edge, IEdgeTarget source) {
         this.edge = edge;
