@@ -5,6 +5,7 @@ import com.dcrux.buran.coredb.iface.nodeClass.*;
 import com.dcrux.buran.coredb.iface.propertyTypes.Exists;
 
 import javax.annotation.Nullable;
+import java.text.MessageFormat;
 
 /**
  * Buran.
@@ -21,7 +22,7 @@ public class BlobType implements IType {
     public static long MAX_LENGTH = Long.MAX_VALUE;
 
     private final boolean indexed;
-    private final long maxLength; //TODO: Wird noch nicht überprüft
+    private final long maxLength;
 
     public static BlobType cIndexed() {
         return new BlobType(MAX_LENGTH, true);
@@ -87,6 +88,16 @@ public class BlobType implements IType {
                 throw new ExpectableException("The given position lies inside existing data. The " +
                         "command would overwrite existing data. Aborting.");
             }
+        }
+
+        /* Check maximum length */
+        final int currentLen = data.getLength();
+        final int overlapping = data.getLength() - pos;
+        final int newLen = currentLen + setter.getData().getNumOfBytes() - overlapping;
+        if (newLen > this.maxLength) {
+            throw new ExpectableException(MessageFormat.format("This blob supports at max {0}. " +
+                    "After the operation the blow would grow to {1} bytes.", this.maxLength,
+                    newLen));
         }
 
         final boolean written =
