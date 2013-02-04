@@ -17,6 +17,14 @@ public class MetaSort implements ISorting {
         this.direction = direction;
     }
 
+    public static MetaSort cAsc(MetaField field) {
+        return new MetaSort(field, SortDirection.asc);
+    }
+
+    public static MetaSort cDesc(MetaField field) {
+        return new MetaSort(field, SortDirection.desc);
+    }
+
     public MetaField getField() {
         return field;
     }

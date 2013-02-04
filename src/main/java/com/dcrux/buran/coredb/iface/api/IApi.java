@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Buran.
@@ -414,6 +415,20 @@ public interface IApi {
     NidVer getLatestVersionBeforeDeletion(UserId receiver, UserId sender, Nid nid)
             throws NodeNotFoundException, QuotaExceededException;
 
+    /**
+     * Returns the class-id of the given node.
+     *
+     * @param receiver
+     * @param sender
+     * @param nid
+     * @return
+     * @throws NodeNotFoundException
+     * @throws PermissionDeniedException
+     * @throws QuotaExceededException
+     */
+    ClassId getClassId(UserId receiver, UserId sender, NidVer nid)
+            throws NodeNotFoundException, PermissionDeniedException, QuotaExceededException;
+
     /*********************************************************************************************
      * REGION: Domain API
      ********************************************************************************************/
@@ -498,6 +513,19 @@ public interface IApi {
     Set<DomainId> getDomains(UserId receiver, UserId sender, NidVer nidVer)
             throws InformationUnavailableException, PermissionDeniedException,
             NodeNotFoundException, QuotaExceededException;
+
+    /**
+     * Creates a domain hash.
+     *
+     * @param uuid
+     * @param creatorName
+     * @param creatorEmail
+     * @param description
+     * @return
+     * @throws QuotaExceededException
+     */
+    DomainHash createDomainHash(UUID uuid, String creatorName, String creatorEmail,
+            String description) throws QuotaExceededException;
 
     /*********************************************************************************************
      * REGION: Subscription API

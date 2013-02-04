@@ -27,6 +27,10 @@ public class UnversionedEdTarget implements IIncEdgeTarget, IEdgeTarget {
         this.nid = nid;
     }
 
+    public Nid getNidx() {
+        return new Nid(this.nid);
+    }
+
     public long getNid() {
         return nid;
     }

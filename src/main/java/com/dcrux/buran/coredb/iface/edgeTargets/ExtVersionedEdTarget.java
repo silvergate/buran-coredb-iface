@@ -1,5 +1,8 @@
 package com.dcrux.buran.coredb.iface.edgeTargets;
 
+import com.dcrux.buran.coredb.iface.NidVer;
+import com.dcrux.buran.coredb.iface.UserId;
+
 /**
  * @author caelis
  */
@@ -27,6 +30,15 @@ public class ExtVersionedEdTarget implements IIncEdgeTarget, IEdgeTarget {
 
     public long getNid() {
         return nid;
+    }
+
+    public NidVer getNidVer() {
+        return new NidVer(getNid(), getVersion());
+    }
+
+    public UserId getUserIdx() {
+        // TODO: Rename to userId
+        return UserId.c(this.userId);
     }
 
     public int getVersion() {

@@ -1,9 +1,11 @@
 package com.dcrux.buran.coredb.iface.nodeClass;
 
+import java.io.Serializable;
+
 /**
  * @author caelis
  */
-public class ClassId {
+public class ClassId implements Serializable {
     private final long id;
 
     public ClassId(long id) {

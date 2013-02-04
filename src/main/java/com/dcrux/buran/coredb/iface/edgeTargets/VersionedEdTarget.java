@@ -29,6 +29,10 @@ public class VersionedEdTarget implements IIncEdgeTarget, IEdgeTarget {
         this.version = version;
     }
 
+    public NidVer getNidVer() {
+        return new NidVer(getNid(), getVersion());
+    }
+
     public long getNid() {
         return nid;
     }

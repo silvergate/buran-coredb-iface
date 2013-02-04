@@ -21,6 +21,11 @@ public class PrivateEdgeClass extends EdgeClass {
         this.outNodeConstraints = outNodeConstraints;
     }
 
+    public static PrivateEdgeClass cQueryableMany(EdgeLabel label, ClassId inEdgeClass) {
+        return new PrivateEdgeClass(label, true, Optional.of(inEdgeClass),
+                PrivateEdgeConstraints.many);
+    }
+
     public static PrivateEdgeClass cQueryable(EdgeLabel label) {
         return new PrivateEdgeClass(label, true, Optional.<ClassId>absent(),
                 PrivateEdgeConstraints.many);
