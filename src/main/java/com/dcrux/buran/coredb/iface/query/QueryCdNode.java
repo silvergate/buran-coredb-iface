@@ -21,6 +21,10 @@ public class QueryCdNode implements IQuery {
                 QueryNode.DEFAULT_SKIP_LIMIT);
     }
 
+    public static QueryCdNode c(CondCdNode condition, SkipLimit skipLimit) {
+        return new QueryCdNode(condition, Optional.<ISorting>absent(), skipLimit);
+    }
+
     public static QueryCdNode cSorted(CondCdNode condition, ISorting sort) {
         return new QueryCdNode(condition, Optional.<ISorting>of(sort),
                 QueryNode.DEFAULT_SKIP_LIMIT);

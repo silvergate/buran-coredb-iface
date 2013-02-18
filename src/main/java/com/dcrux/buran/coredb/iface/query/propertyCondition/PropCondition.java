@@ -12,8 +12,8 @@ public class PropCondition implements IPropertyCondition {
     private final short typeIndex;
     private final ICmp comparator;
 
-    public static PropCondition c(short typeIndex, ICmp comparator) {
-        return new PropCondition(typeIndex, comparator);
+    public static PropCondition c(int typeIndex, ICmp comparator) {
+        return new PropCondition((short) typeIndex, comparator);
     }
 
     public PropCondition(short typeIndex, ICmp comparator) {

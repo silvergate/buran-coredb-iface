@@ -18,6 +18,10 @@ public class QueryNode implements IQuery {
         this.skipLimit = skipLimit;
     }
 
+    public static QueryNode c(CondNode condition, SkipLimit skipLimit) {
+        return new QueryNode(condition, Optional.<MetaSort>absent(), skipLimit);
+    }
+
     public static QueryNode c(CondNode condition) {
         return new QueryNode(condition, Optional.<MetaSort>absent(), DEFAULT_SKIP_LIMIT);
     }
