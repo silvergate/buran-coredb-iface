@@ -8,6 +8,7 @@ import com.dcrux.buran.coredb.iface.api.exceptions.ExpectableException;
 import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.UnversionedEdTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.VersionedEdTarget;
+import com.dcrux.buran.coredb.iface.nodeClass.ClassId;
 import com.dcrux.buran.coredb.iface.query.ICondNode;
 import com.dcrux.buran.coredb.iface.query.nodeMeta.IMetaInfoForQuery;
 import com.dcrux.buran.coredb.iface.query.nodeMeta.INodeMetaCondition;
@@ -25,6 +26,7 @@ public class OutEdgeCondition implements INodeMetaCondition {
     private final Optional<EdgeIndex> index;
     private final Optional<ICondNode> target;
     private final boolean matchAll;
+    private final Optional<ClassId> sourceClassId;
 
     public static OutEdgeCondition c(EdgeLabel label) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
@@ -48,6 +50,8 @@ public class OutEdgeCondition implements INodeMetaCondition {
 
     private OutEdgeCondition(EdgeLabel label, Optional<EdgeIndex> index, Optional<ICondNode> target,
             boolean matchAll) {
+        System.err.println("TODO: Implement this.sourceClassId (required) for private edges.");
+        this.sourceClassId = Optional.absent();
         this.label = label;
         this.index = index;
         this.target = target;
