@@ -1,11 +1,13 @@
 package com.dcrux.buran.coredb.iface;
 
+import java.io.Serializable;
+
 /**
  * Buran.
  *
  * @author: ${USER} Date: 19.01.13 Time: 11:34
  */
-public class Nid {
+public class Nid implements Serializable {
     private final long nid;
 
     public Nid(long nid) {

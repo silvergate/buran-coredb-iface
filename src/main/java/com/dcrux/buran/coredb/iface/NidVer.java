@@ -1,9 +1,11 @@
 package com.dcrux.buran.coredb.iface;
 
+import java.io.Serializable;
+
 /**
  * @author caelis
  */
-public class NidVer extends Nid {
+public class NidVer extends Nid implements Serializable {
 
     /**
      * First version of a node.

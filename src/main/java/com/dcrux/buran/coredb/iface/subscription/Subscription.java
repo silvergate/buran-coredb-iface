@@ -3,6 +3,7 @@ package com.dcrux.buran.coredb.iface.subscription;
 import com.dcrux.buran.coredb.iface.UserId;
 import com.dcrux.buran.coredb.iface.query.ICondNode;
 
+import java.io.Serializable;
 import java.util.EnumSet;
 
 /**
@@ -10,7 +11,7 @@ import java.util.EnumSet;
  *
  * @author: ${USER} Date: 07.01.13 Time: 21:42
  */
-public class Subscription {
+public class Subscription implements Serializable {
     private final UserId receiver;
     private final UserId sender;
     private final EnumSet<SubscriptionEventType> eventTypes;

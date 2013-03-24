@@ -1,11 +1,13 @@
 package com.dcrux.buran.coredb.iface.subscription;
 
+import java.io.Serializable;
+
 /**
  * Buran.
  *
  * @author: ${USER} Date: 07.01.13 Time: 21:31
  */
-public enum SubscriptionEventType {
+public enum SubscriptionEventType implements Serializable {
     /**
      * It's a new node (first version), not replacing another node.
      */

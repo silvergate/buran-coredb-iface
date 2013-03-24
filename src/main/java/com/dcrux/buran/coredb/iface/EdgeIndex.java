@@ -1,9 +1,11 @@
 package com.dcrux.buran.coredb.iface;
 
+import java.io.Serializable;
+
 /**
  * @author caelis
  */
-public class EdgeIndex {
+public class EdgeIndex implements Serializable {
 
     public static final EdgeIndex BASIS = new EdgeIndex(0);
 

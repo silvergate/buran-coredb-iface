@@ -1,11 +1,13 @@
 package com.dcrux.buran.coredb.iface;
 
+import java.io.Serializable;
+
 /**
  * Buran.
  *
  * @author: ${USER} Date: 02.01.13 Time: 14:56
  */
-public final class UserId {
+public final class UserId implements Serializable {
     private final long id;
 
     public static UserId c(long id) {
