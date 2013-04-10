@@ -11,7 +11,11 @@ import java.util.Arrays;
  */
 @ThreadSafe
 public class ByteContainer implements Serializable {
-    private volatile byte[] data;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1564789141377457301L;
+	private volatile byte[] data;
     private boolean sealed;
 
     public byte[] getData() {

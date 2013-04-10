@@ -12,7 +12,11 @@ import java.util.List;
  */
 public class BinaryBlocks implements Serializable {
 
-    private final int blockSize;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2264827570449670855L;
+	private final int blockSize;
     private long length;
     private List<byte[]> blocks = new ArrayList<>();
     public static final int DEFAULT_BLOCK_SIZE = 32768;

@@ -8,7 +8,11 @@ import java.io.Serializable;
  * @author: ${USER} Date: 02.01.13 Time: 14:56
  */
 public final class UserId implements Serializable {
-    private final long id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3437689569331780671L;
+	private final long id;
 
     public static UserId c(long id) {
         return new UserId(id);

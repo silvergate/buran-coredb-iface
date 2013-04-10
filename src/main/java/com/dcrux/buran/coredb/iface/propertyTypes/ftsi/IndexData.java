@@ -10,7 +10,11 @@ import java.util.Set;
  * @author: ${USER} Date: 04.01.13 Time: 23:41
  */
 public class IndexData implements Serializable {
-    private final Set<Integer> highFuziness = new HashSet<>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3855146901018612474L;
+	private final Set<Integer> highFuziness = new HashSet<>();
     private final Set<Integer> mediumFuziness = new HashSet<>();
     private final Set<Integer> exact = new HashSet<>();
 

@@ -12,7 +12,11 @@ import java.util.EnumSet;
  * @author: ${USER} Date: 07.01.13 Time: 21:42
  */
 public class Subscription implements Serializable {
-    private final UserId receiver;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8488509764947945105L;
+	private final UserId receiver;
     private final UserId sender;
     private final EnumSet<SubscriptionEventType> eventTypes;
     private final ICondNode query;

@@ -8,6 +8,11 @@ import java.io.Serializable;
 public class NidVer extends Nid implements Serializable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3938842815924445001L;
+
+	/**
      * First version of a node.
      */
     public static final int FIRST_VERSION = Integer.MIN_VALUE + 1;
