@@ -1,9 +1,9 @@
 package com.dcrux.buran.coredb.iface.query.nodeMeta;
 
-import com.dcrux.buran.coredb.iface.Edge;
-import com.dcrux.buran.coredb.iface.EdgeIndex;
-import com.dcrux.buran.coredb.iface.EdgeLabel;
-import com.dcrux.buran.coredb.iface.EdgeWithSource;
+import com.dcrux.buran.coredb.iface.edge.Edge;
+import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
+import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
+import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 import com.dcrux.buran.coredb.iface.nodeClass.NodeClass;
 import com.dcrux.buran.coredb.iface.permissions.UserNodePermission;
 import com.google.common.collect.Multimap;
@@ -44,7 +44,7 @@ public interface IMetaInfoForQuery {
     /* Edges */
     Map<EdgeIndex, Edge> getQueryableOutEdges(EdgeLabel label);
 
-    Multimap<EdgeIndex, EdgeWithSource> getQueryableInEdges(EdgeLabel label);
+    Multimap<EdgeIndex, IEdgeTarget> getQueryableInEdges(EdgeLabel label);
 
     INodeMatcher getNodeMatcher();
 }

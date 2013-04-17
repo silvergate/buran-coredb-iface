@@ -4,6 +4,10 @@ import com.dcrux.buran.coredb.iface.*;
 import com.dcrux.buran.coredb.iface.api.exceptions.*;
 import com.dcrux.buran.coredb.iface.domains.DomainHash;
 import com.dcrux.buran.coredb.iface.domains.DomainId;
+import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
+import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
+import com.dcrux.buran.coredb.iface.edge.EdgeType;
+import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.IIncEdgeTarget;
 import com.dcrux.buran.coredb.iface.nodeClass.*;
 import com.dcrux.buran.coredb.iface.query.IQuery;
@@ -159,8 +163,11 @@ public interface IApi {
     /**
      * Transfers information from one node to another. The source node has the following
      * requirement: <ul> <li>Must have the same receiver as the target node.</li> <li>If
-     * transferring of properties and/or edges is not excluded the target node must be of the same
+     * transferring of properties and/or edge is not excluded the target node must be of the same
      * class as the source node. </li> </ul>
+     * <p/>
+     * TODO: Das Transferieren der public properties sollte eigentlich ok sein, zwischen zwei
+     * unterschiedlichen klassen (jedenfalls meistens, je nach constraint).
      *
      * @param receiver
      * @param sender
@@ -181,7 +188,7 @@ public interface IApi {
      * @throws NodeNotFoundException
      *         The source node was not found.
      * @throws IncompatibleClassException
-     *         Transferring of properties and/or edges is activated and source and target node are
+     *         Transferring of properties and/or edge is activated and source and target node are
      *         not of the same class.
      */
     void transferData(UserId receiver, UserId sender, IncNid target, NidVer src,
@@ -204,8 +211,9 @@ public interface IApi {
      *         The specified (by label and index) edge already exists.
      * @throws IncubationNodeNotFound
      * @see #setEdgeReplace(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
-     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeIndex,
-     *      com.dcrux.buran.coredb.iface.EdgeLabel, com.dcrux.buran.coredb.iface.edgeTargets
+     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge
+     *      .EdgeIndex, com.dcrux.buran.coredb.iface.edge.EdgeLabel, com.dcrux.buran.coredb.iface
+     *      .edgeTargets
      *      .IIncEdgeTarget)
      */
     void setEdge(UserId receiver, UserId sender, IncNid incNid, EdgeIndex index, EdgeLabel label,
@@ -224,8 +232,8 @@ public interface IApi {
      * @param target
      * @throws IncubationNodeNotFound
      * @see #setEdge(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface.UserId,
-     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeIndex,
-     *      com.dcrux.buran.coredb.iface.EdgeLabel, com.dcrux.buran.coredb.iface.edgeTargets
+     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge.EdgeIndex,
+     *      com.dcrux.buran.coredb.iface.edge.EdgeLabel, com.dcrux.buran.coredb.iface.edgeTargets
      *      .IIncEdgeTarget)
      */
     void setEdgeReplace(UserId receiver, UserId sender, IncNid incNid, EdgeIndex index,
@@ -245,8 +253,8 @@ public interface IApi {
      *         Is thrown if the edge specified by label and index does not exists.
      * @throws IncubationNodeNotFound
      * @see #removeEdge(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface.UserId,
-     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeLabel,
-     *      com.dcrux.buran.coredb.iface.EdgeIndex)
+     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge.EdgeLabel,
+     *      com.dcrux.buran.coredb.iface.edge.EdgeIndex)
      */
     void removeEdgeStrict(UserId receiver, UserId sender, IncNid incNid, EdgeLabel label,
             EdgeIndex index) throws EdgeIndexNotSet, IncubationNodeNotFound, QuotaExceededException;
@@ -262,15 +270,15 @@ public interface IApi {
      * @param index
      * @throws IncubationNodeNotFound
      * @see #removeEdgeStrict(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
-     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.EdgeLabel,
-     *      com.dcrux.buran.coredb.iface.EdgeIndex)
+     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge
+     *      .EdgeLabel, com.dcrux.buran.coredb.iface.edge.EdgeIndex)
      */
     void removeEdge(UserId receiver, UserId sender, IncNid incNid, EdgeLabel label, EdgeIndex index)
             throws IncubationNodeNotFound, QuotaExceededException;
 
     /**
-     * Removes all out edges with the specified label (if a label is given) or all edges (if no
-     * label is given).
+     * Removes all out edge with the specified label (if a label is given) or all edge (if no label
+     * is given).
      *
      * @param receiver
      * @param sender
@@ -325,8 +333,9 @@ public interface IApi {
             NodeNotFoundException, QuotaExceededException;
 
     /**
-     * Gets out-edges from a node. Can optionally be filtered by label and public and private
-     * edges.
+     * Gets out-edge from a node. Can optionally be filtered by label and public and private edge.
+     * <p/>
+     * TODO: Filtern nach einem range von edge-indexes.
      *
      * @param receiver
      * @param sender
@@ -334,20 +343,31 @@ public interface IApi {
      * @param types
      *         Optional: Filter by modifier (public or private). Must not be empty.
      * @param label
-     *         Optional: Filter by label.
+     *         Optional: Filter by label<strong>Important</strong>: <ul><li>Illegal (not declared in
+     *         the class) private labels are not allowed (will throw an exception).</li><li>Illegal
+     *         public labels result in an empty result set. (reason: they might not be declared in
+     *         the system, so buran is not able to reason whether they're legal or
+     *         illegal).</li><li>If a label is given, the correct modifier must be in the
+     *         types-enum-set.</li></ul>
      * @return
      * @throws NodeNotFoundException
      * @throws InformationUnavailableException
      *
      * @throws PermissionDeniedException
      */
-    Map<EdgeLabel, Map<EdgeIndex, Edge>> getOutEdges(UserId receiver, UserId sender, NidVer nid,
-            EnumSet<EdgeType> types, Optional<EdgeLabel> label)
+    Map<EdgeLabel, Map<EdgeIndex, IEdgeTarget>> getOutEdges(UserId receiver, UserId sender,
+            NidVer nid, EnumSet<EdgeType> types, Optional<EdgeLabel> label)
             throws NodeNotFoundException, InformationUnavailableException,
             PermissionDeniedException, QuotaExceededException;
 
     /**
-     * Gets in-edges from a node. Can optionally be filtered by label and public and private edges.
+     * Gets in-edge from a node. Can optionally be filtered by label and public and private edge.
+     * <p/>
+     * TODO: Da sind 2 dinge nicht korrekt: - Die private in-edge können ohne die in-klasse nicht
+     * gelistet werden. - Es muss angegeben werden können, ob historisierte, nur aktuelle oder
+     * beides geliefert wird.
+     * <p/>
+     * TODO: Filtern nach einem Range von EdgeIndex muss möglich sein.
      *
      * @param receiver
      * @param sender
@@ -362,8 +382,21 @@ public interface IApi {
      *
      * @throws PermissionDeniedException
      */
-    Map<EdgeLabel, Multimap<EdgeIndex, EdgeWithSource>> getInEdges(UserId receiver, UserId sender,
+    @Deprecated
+    Map<EdgeLabel, Multimap<EdgeIndex, IEdgeTarget>> getInEdges(UserId receiver, UserId sender,
             NidVer nid, EnumSet<EdgeType> types, Optional<EdgeLabel> label)
+            throws NodeNotFoundException, InformationUnavailableException,
+            PermissionDeniedException, QuotaExceededException;
+
+    /*Map<EdgeLabel, Multimap<EdgeIndex, IEdgeTarget>> getPublicInEdges(UserId receiver,
+            UserId sender,
+            NidVer nid, EnumSet<HistoryState> historyStates, Optional<EdgeLabel> label)
+            throws NodeNotFoundException, InformationUnavailableException,
+            PermissionDeniedException, QuotaExceededException; */
+
+    Map<EdgeLabel, Multimap<EdgeIndex, IEdgeTarget>> getInEdges(UserId receiver, UserId sender,
+            NidVer nid, EnumSet<HistoryState> sourceHistoryStates, Optional<ClassId> sourceClassId,
+            EnumSet<EdgeType> types, Optional<EdgeLabel> label)
             throws NodeNotFoundException, InformationUnavailableException,
             PermissionDeniedException, QuotaExceededException;
 
@@ -402,6 +435,8 @@ public interface IApi {
 
     /**
      * Returns the latest version of a deleted node.
+     * <p/>
+     * TODO: Return Version, not NidVer
      *
      * @param receiver
      * @param sender

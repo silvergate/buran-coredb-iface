@@ -1,4 +1,4 @@
-package com.dcrux.buran.coredb.iface;
+package com.dcrux.buran.coredb.iface.edge;
 
 import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 
@@ -22,6 +22,7 @@ public class Edge {
         return label;
     }
 
+    @Deprecated //Entfernen?
     public void setTarget(IEdgeTarget target) {
         this.target = target;
     }

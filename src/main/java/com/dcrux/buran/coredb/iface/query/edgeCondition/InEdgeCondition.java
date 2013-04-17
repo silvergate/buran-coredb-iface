@@ -1,7 +1,10 @@
 package com.dcrux.buran.coredb.iface.query.edgeCondition;
 
-import com.dcrux.buran.coredb.iface.*;
+import com.dcrux.buran.coredb.iface.Nid;
+import com.dcrux.buran.coredb.iface.NidVer;
 import com.dcrux.buran.coredb.iface.api.exceptions.ExpectableException;
+import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
+import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
 import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.UnversionedEdTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.VersionedEdTarget;
@@ -43,7 +46,7 @@ public class InEdgeCondition implements INodeMetaCondition {
         this.label = label;
         if ((!this.label.isPublic()) && (!sourceClassId.isPresent())) {
             throw new IllegalArgumentException(
-                    "Querying for private edges is only supported if " + "class id is given.");
+                    "Querying for private edge is only supported if " + "class id is given.");
         }
         this.sourceClassId = sourceClassId;
         this.index = index;
@@ -95,7 +98,7 @@ public class InEdgeCondition implements INodeMetaCondition {
 
     @Override
     public boolean matches(IMetaInfoForQuery metaInfoForQuery) {
-        final Multimap<EdgeIndex, EdgeWithSource> queryableInEdges =
+        final Multimap<EdgeIndex, IEdgeTarget> queryableInEdges =
                 metaInfoForQuery.getQueryableInEdges(this.label);
 
         /* Label available? */
@@ -103,7 +106,7 @@ public class InEdgeCondition implements INodeMetaCondition {
             return false;
         }
 
-        final Multimap<EdgeIndex, EdgeWithSource> outEdgesToQuery;
+        final Multimap<EdgeIndex, IEdgeTarget> outEdgesToQuery;
         if (this.index.isPresent()) {
             outEdgesToQuery = HashMultimap.create();
             if (!queryableInEdges.containsKey(this.index.get())) {
@@ -114,7 +117,7 @@ public class InEdgeCondition implements INodeMetaCondition {
             outEdgesToQuery = queryableInEdges;
         }
 
-        for (Map.Entry<EdgeIndex, EdgeWithSource> elementToCheck : outEdgesToQuery.entries()) {
+        for (Map.Entry<EdgeIndex, IEdgeTarget> elementToCheck : outEdgesToQuery.entries()) {
             boolean matchesData = true;
             boolean matchesClass = true;
 
@@ -122,8 +125,8 @@ public class InEdgeCondition implements INodeMetaCondition {
                 matchesData = matches(elementToCheck.getValue(), metaInfoForQuery);
             }
             if (this.sourceClassId.isPresent()) {
-                matchesClass = matchesClass(elementToCheck.getValue().getSource(),
-                        this.sourceClassId.get(), metaInfoForQuery);
+                matchesClass = matchesClass(elementToCheck.getValue(), this.sourceClassId.get(),
+                        metaInfoForQuery);
             }
             if (matchesData && matchesClass) {
                 return true;
@@ -171,8 +174,7 @@ public class InEdgeCondition implements INodeMetaCondition {
     }
 
 
-    private boolean matches(EdgeWithSource withSource, IMetaInfoForQuery metaInfoForQuery) {
-        final IEdgeTarget edgeTarget = withSource.getSource();
+    private boolean matches(IEdgeTarget edgeTarget, IMetaInfoForQuery metaInfoForQuery) {
         boolean found;
         final Integer version;
         final Long oid;
