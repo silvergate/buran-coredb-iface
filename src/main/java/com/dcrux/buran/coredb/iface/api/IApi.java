@@ -213,8 +213,7 @@ public interface IApi {
      * @see #setEdgeReplace(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
      *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge
      *      .EdgeIndex, com.dcrux.buran.coredb.iface.edge.EdgeLabel, com.dcrux.buran.coredb.iface
-     *      .edgeTargets
-     *      .IIncEdgeTarget)
+     *      .edgeTargets .IIncEdgeTarget)
      */
     void setEdge(UserId receiver, UserId sender, IncNid incNid, EdgeIndex index, EdgeLabel label,
             IIncEdgeTarget target)
@@ -361,42 +360,29 @@ public interface IApi {
             PermissionDeniedException, QuotaExceededException;
 
     /**
-     * Gets in-edge from a node. Can optionally be filtered by label and public and private edge.
-     * <p/>
-     * TODO: Da sind 2 dinge nicht korrekt: - Die private in-edge können ohne die in-klasse nicht
-     * gelistet werden. - Es muss angegeben werden können, ob historisierte, nur aktuelle oder
-     * beides geliefert wird.
-     * <p/>
-     * TODO: Filtern nach einem Range von EdgeIndex muss möglich sein.
+     * Gets in-edge from a node. Can optionally be filtered by various parameters.
      *
      * @param receiver
      * @param sender
      * @param nid
+     * @param sourceHistoryStates
+     * @param sourceClassId
      * @param types
-     *         Optional: Filter by modifier (public or private). Must not be empty.
+     *         Filter by modifier (public or private). Must not be empty.
+     * @param indexRange
      * @param label
-     *         Optional: Filter by label.
+     *         Optional. If a private label is given, the sourceClassId must either be absent or
+     *         must be the same classId as in the private label.
      * @return
      * @throws NodeNotFoundException
      * @throws InformationUnavailableException
      *
      * @throws PermissionDeniedException
+     * @throws QuotaExceededException
      */
-    @Deprecated
-    Map<EdgeLabel, Multimap<EdgeIndex, IEdgeTarget>> getInEdges(UserId receiver, UserId sender,
-            NidVer nid, EnumSet<EdgeType> types, Optional<EdgeLabel> label)
-            throws NodeNotFoundException, InformationUnavailableException,
-            PermissionDeniedException, QuotaExceededException;
-
-    /*Map<EdgeLabel, Multimap<EdgeIndex, IEdgeTarget>> getPublicInEdges(UserId receiver,
-            UserId sender,
-            NidVer nid, EnumSet<HistoryState> historyStates, Optional<EdgeLabel> label)
-            throws NodeNotFoundException, InformationUnavailableException,
-            PermissionDeniedException, QuotaExceededException; */
-
     Map<EdgeLabel, Multimap<EdgeIndex, IEdgeTarget>> getInEdges(UserId receiver, UserId sender,
             NidVer nid, EnumSet<HistoryState> sourceHistoryStates, Optional<ClassId> sourceClassId,
-            EnumSet<EdgeType> types, Optional<EdgeLabel> label)
+            EnumSet<EdgeType> types, Optional<EdgeIndexRange> indexRange, Optional<EdgeLabel> label)
             throws NodeNotFoundException, InformationUnavailableException,
             PermissionDeniedException, QuotaExceededException;
 

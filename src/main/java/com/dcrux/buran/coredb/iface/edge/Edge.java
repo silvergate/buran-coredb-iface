@@ -5,8 +5,8 @@ import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 /**
  * @author caelis
  */
-public class Edge {
-    private IEdgeTarget target;
+public final class Edge {
+    private final IEdgeTarget target;
     private final EdgeLabel label;
 
     public Edge(IEdgeTarget target, EdgeLabel label) {
@@ -20,10 +20,5 @@ public class Edge {
 
     public EdgeLabel getLabel() {
         return label;
-    }
-
-    @Deprecated //Entfernen?
-    public void setTarget(IEdgeTarget target) {
-        this.target = target;
     }
 }

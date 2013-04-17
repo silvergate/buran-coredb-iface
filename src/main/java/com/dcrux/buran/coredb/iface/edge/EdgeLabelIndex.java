@@ -13,7 +13,7 @@ public class EdgeLabelIndex {
     }
 
     public static EdgeLabelIndex fromString(final String name) {
-        return new EdgeLabelIndex(EdgeLabel.toHash(name));
+        return new EdgeLabelIndex(EdgeLabel.fromNameToIndex(name));
     }
 
     public short getLabelIndex() {

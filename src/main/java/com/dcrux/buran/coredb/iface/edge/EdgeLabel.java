@@ -27,7 +27,7 @@ public class EdgeLabel implements Serializable {
         this.publicLabel = publicLabel;
     }
 
-    public static short toHash(final String string) {
+    public static short fromNameToIndex(final String string) {
         short hash = 7;
         for (int i = 0; i < string.length(); i++) {
             hash = (short) (hash * 31 + string.charAt(i));
@@ -51,7 +51,7 @@ public class EdgeLabel implements Serializable {
     }
 
     public static EdgeLabel privateEdge(ClassId classId, String name) {
-        short index = toHash(name);
+        short index = fromNameToIndex(name);
         return new EdgeLabel(new PrivateEdgeLabel(classId, index), null);
     }
 
