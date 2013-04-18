@@ -23,6 +23,7 @@ import java.util.UUID;
  *
  * @author: ${USER} Date: 02.01.13 Time: 15:26
  */
+//FIXME Optional ersetzen mit weiteren methoden
 public interface IApi {
 
     /*********************************************************************************************
