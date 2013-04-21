@@ -1,6 +1,6 @@
 package com.dcrux.buran.coredb.iface.api;
 
-import com.dcrux.buran.coredb.iface.EdgeLabel;
+import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -43,7 +43,7 @@ public final class TransferExclusion {
     }
 
     /**
-     * Don't transfer edges of the specified label.
+     * Don't transfer edge of the specified label.
      *
      * @param edgeLabel
      * @return This for chaining.
@@ -55,7 +55,7 @@ public final class TransferExclusion {
     }
 
     /**
-     * Don't transfer edges at all.
+     * Don't transfer edge at all.
      *
      * @return This for chaining.
      */

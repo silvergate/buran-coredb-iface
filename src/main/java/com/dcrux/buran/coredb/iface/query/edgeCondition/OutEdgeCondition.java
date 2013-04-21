@@ -1,10 +1,10 @@
 package com.dcrux.buran.coredb.iface.query.edgeCondition;
 
-import com.dcrux.buran.coredb.iface.Edge;
-import com.dcrux.buran.coredb.iface.EdgeIndex;
-import com.dcrux.buran.coredb.iface.EdgeLabel;
 import com.dcrux.buran.coredb.iface.NidVer;
 import com.dcrux.buran.coredb.iface.api.exceptions.ExpectableException;
+import com.dcrux.buran.coredb.iface.edge.Edge;
+import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
+import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
 import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.UnversionedEdTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.VersionedEdTarget;
@@ -30,28 +30,37 @@ public class OutEdgeCondition implements INodeMetaCondition {
 
     public static OutEdgeCondition c(EdgeLabel label) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
-                Optional.<ICondNode>absent(), false);
+                Optional.<ICondNode>absent(), Optional.<ClassId>absent(), false);
     }
 
     public static OutEdgeCondition c(EdgeLabel label, EdgeIndex edgeIndex) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>of(edgeIndex),
-                Optional.<ICondNode>absent(), false);
+                Optional.<ICondNode>absent(), Optional.<ClassId>absent(), false);
+    }
+
+    public static OutEdgeCondition c(ClassId sourceClassId, EdgeLabel label, EdgeIndex edgeIndex,
+            ICondNode target) {
+        return new OutEdgeCondition(label, Optional.<EdgeIndex>of(edgeIndex),
+                Optional.<ICondNode>of(target), Optional.<ClassId>of(sourceClassId), false);
     }
 
     public static OutEdgeCondition c(EdgeLabel label, EdgeIndex edgeIndex, ICondNode target) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>of(edgeIndex),
-                Optional.<ICondNode>of(target), false);
+                Optional.<ICondNode>of(target), Optional.<ClassId>absent(), false);
     }
 
     public static OutEdgeCondition all(EdgeLabel label, ICondNode target) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
-                Optional.<ICondNode>of(target), true);
+                Optional.<ICondNode>of(target), Optional.<ClassId>absent(), true);
     }
 
     private OutEdgeCondition(EdgeLabel label, Optional<EdgeIndex> index, Optional<ICondNode> target,
-            boolean matchAll) {
-        System.err.println("TODO: Implement this.sourceClassId (required) for private edges.");
-        this.sourceClassId = Optional.absent();
+            Optional<ClassId> sourceClassId, boolean matchAll) {
+        if ((!label.isPublic()) && (!sourceClassId.isPresent())) {
+            throw new IllegalArgumentException(
+                    "Need a source-class-id if a private label is " + "given.");
+        }
+        this.sourceClassId = sourceClassId;
         this.label = label;
         this.index = index;
         this.target = target;
@@ -66,27 +75,27 @@ public class OutEdgeCondition implements INodeMetaCondition {
 
     public static OutEdgeCondition hasAnyEdge(EdgeLabel label) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
-                Optional.<ICondNode>absent(), false);
+                Optional.<ICondNode>absent(), Optional.<ClassId>absent(), false);
     }
 
     public static OutEdgeCondition hasEdge(EdgeLabel label, EdgeIndex index) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>of(index),
-                Optional.<ICondNode>absent(), false);
+                Optional.<ICondNode>absent(), Optional.<ClassId>absent(), false);
     }
 
     public static OutEdgeCondition hasAnyEdge(EdgeLabel label, ICondNode targetNode) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
-                Optional.<ICondNode>of(targetNode), false);
+                Optional.<ICondNode>of(targetNode), Optional.<ClassId>absent(), false);
     }
 
     public static OutEdgeCondition hasEdge(EdgeLabel label, EdgeIndex index, ICondNode targetNode) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>of(index),
-                Optional.<ICondNode>of(targetNode), false);
+                Optional.<ICondNode>of(targetNode), Optional.<ClassId>absent(), false);
     }
 
     public static OutEdgeCondition hasEdgeAll(EdgeLabel label, ICondNode targetNode) {
         return new OutEdgeCondition(label, Optional.<EdgeIndex>absent(),
-                Optional.<ICondNode>of(targetNode), true);
+                Optional.<ICondNode>of(targetNode), Optional.<ClassId>absent(), true);
     }
 
     public EdgeLabel getLabel() {

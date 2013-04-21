@@ -1,7 +1,6 @@
 package com.dcrux.buran.coredb.iface.nodeClass;
 
-import com.dcrux.buran.coredb.iface.EdgeLabel;
-import com.dcrux.buran.coredb.iface.edgeClass.PrivateEdgeClass;
+import com.dcrux.buran.coredb.iface.edgeClass.EdgeClass;
 
 import java.io.Serializable;
 import java.util.*;
@@ -17,10 +16,10 @@ public final class NodeClass implements Serializable {
     private final IType[] types;
     private final Map<String, Short> nameToTypeIndex;
     private final Set<Short> requiredTypes;
-    private final Map<EdgeLabel, PrivateEdgeClass> labelsToEdgeClasses;
+    private final Map<Short, EdgeClass> labelsToEdgeClasses;
 
     protected NodeClass(IType[] types, Map<String, Short> nameToTypeIndex, Set<Short> requiredTypes,
-            Map<EdgeLabel, PrivateEdgeClass> labelsToEdgeClasses) {
+            Map<Short, EdgeClass> labelsToEdgeClasses) {
         this.types = types;
         this.nameToTypeIndex = nameToTypeIndex;
         this.requiredTypes = requiredTypes;
@@ -32,7 +31,7 @@ public final class NodeClass implements Serializable {
             private final Map<String, Short> nameToTypeIndex = new HashMap<String, Short>();
             private final List<IType> types = new ArrayList<IType>();
             private final Set<Short> requiredTypes = new HashSet<>();
-            private final Map<EdgeLabel, PrivateEdgeClass> labelsToEdgeClasses = new HashMap<>();
+            private final Map<Short, EdgeClass> labelsToEdgeClasses = new HashMap<>();
 
             @Override
             public IBuilder add(String name, boolean required, IType type) {
@@ -46,11 +45,11 @@ public final class NodeClass implements Serializable {
             }
 
             @Override
-            public IBuilder addEdgeClass(PrivateEdgeClass edgeClass) {
-                if (this.labelsToEdgeClasses.containsKey(edgeClass.getLabel())) {
+            public IBuilder addEdgeClass(EdgeClass edgeClass) {
+                if (this.labelsToEdgeClasses.containsKey(edgeClass.getLabelIndex())) {
                     throw new IllegalStateException("Edge with the same key already exists.");
                 }
-                this.labelsToEdgeClasses.put(edgeClass.getLabel(), edgeClass);
+                this.labelsToEdgeClasses.put(edgeClass.getLabelIndex(), edgeClass);
                 return this;
             }
 
@@ -87,7 +86,7 @@ public final class NodeClass implements Serializable {
         return this.types[index];
     }
 
-    public Map<EdgeLabel, PrivateEdgeClass> getEdgeClasses() {
+    public Map<Short, EdgeClass> getEdgeClasses() {
         return Collections.unmodifiableMap(this.labelsToEdgeClasses);
     }
 }

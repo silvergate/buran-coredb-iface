@@ -1,12 +1,12 @@
-package com.dcrux.buran.coredb.iface;
+package com.dcrux.buran.coredb.iface.edge;
 
 import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 
 /**
  * @author caelis
  */
-public class Edge {
-    private IEdgeTarget target;
+public final class Edge {
+    private final IEdgeTarget target;
     private final EdgeLabel label;
 
     public Edge(IEdgeTarget target, EdgeLabel label) {
@@ -20,9 +20,5 @@ public class Edge {
 
     public EdgeLabel getLabel() {
         return label;
-    }
-
-    public void setTarget(IEdgeTarget target) {
-        this.target = target;
     }
 }

@@ -27,4 +27,9 @@ public class CreateInfoUpdate {
         this.createInfo = createInfo;
         this.historyInformation = historyInformation;
     }
+
+    @Override
+    public String toString() {
+        return "CreateInfoUpdate(nid=" + getIncNid().toString() + ")";
+    }
 }
