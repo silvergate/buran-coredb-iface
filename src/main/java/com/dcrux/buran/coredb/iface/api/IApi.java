@@ -327,8 +327,8 @@ public interface IApi {
      * @throws NodeNotFoundException
      */
     @Nullable
-    Object getData(UserId receiver, UserId sender, NidVer nidVersion, short typeIndex,
-            IDataGetter dataGetter)
+    <TData> TData getData(UserId receiver, UserId sender, NidVer nidVersion, short typeIndex,
+            IDataGetter<TData> dataGetter)
             throws InformationUnavailableException, PermissionDeniedException,
             NodeNotFoundException, QuotaExceededException;
 

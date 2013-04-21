@@ -7,12 +7,12 @@ import com.dcrux.buran.coredb.iface.nodeClass.IDataGetter;
  *
  * @author: ${USER} Date: 17.01.13 Time: 21:37
  */
-public final class BlobGet implements IDataGetter {
+public final class BlobGet implements IDataGetter<byte[]> {
     private final long skip;
     private final long length;
     private final boolean strictLength;
 
-    public static BlobGet c(int length) {
+    public static BlobGet c(long length) {
         return new BlobGet(0, length, true);
     }
 

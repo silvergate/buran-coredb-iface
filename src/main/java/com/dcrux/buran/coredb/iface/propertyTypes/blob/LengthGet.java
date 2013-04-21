@@ -7,6 +7,6 @@ import com.dcrux.buran.coredb.iface.nodeClass.IDataGetter;
  *
  * @author: ${USER} Date: 17.01.13 Time: 21:37
  */
-public class LengthGet implements IDataGetter {
+public class LengthGet implements IDataGetter<Long> {
     public static final LengthGet SINGLETON = new LengthGet();
 }

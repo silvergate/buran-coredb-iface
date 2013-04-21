@@ -86,6 +86,6 @@ public class FtsiType implements IType {
     @Override
     public Object getData(IDataGetter dataGetter, @Nullable Object value) {
         throw new IllegalStateException("Operation not supported (Hinweis: Brauchts irgendwann " +
-                "doch noch (extrahieren aller daten)");
+                "doch noch (extrahieren aller daten) - Nein, brauchts nicht!");
     }
 }
