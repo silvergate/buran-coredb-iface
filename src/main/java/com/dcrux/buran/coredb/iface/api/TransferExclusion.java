@@ -1,6 +1,7 @@
 package com.dcrux.buran.coredb.iface.api;
 
 import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
+import com.dcrux.buran.coredb.iface.nodeClass.FieldIndex;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,13 +21,13 @@ public final class TransferExclusion {
     /**
      * Don't transfer the specified property.
      *
-     * @param typeIndex
+     * @param fieldIndex
      * @return This for chaining.
      */
-    public TransferExclusion ex(short typeIndex) {
+    public TransferExclusion ex(FieldIndex fieldIndex) {
         if (this.excludeAllProperties)
             throw new IllegalArgumentException("this.excludeAllProperties==true");
-        this.excludedProperties.add(typeIndex);
+        this.excludedProperties.add(fieldIndex.getIndex());
         return this;
     }
 

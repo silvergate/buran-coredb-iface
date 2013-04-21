@@ -77,8 +77,8 @@ public final class NodeClass implements Serializable {
         return (int) this.types.length;
     }
 
-    public short getTypeIndex(String key) {
-        return this.nameToTypeIndex.get(key);
+    public FieldIndex getTypeIndex(String key) {
+        return FieldIndex.c(this.nameToTypeIndex.get(key));
     }
 
     public IType getType(String name) {

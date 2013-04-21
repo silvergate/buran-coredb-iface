@@ -1,5 +1,6 @@
 package com.dcrux.buran.coredb.iface.query;
 
+import com.dcrux.buran.coredb.iface.nodeClass.FieldIndex;
 import com.dcrux.buran.coredb.iface.nodeClass.SorterRef;
 
 /**
@@ -22,8 +23,8 @@ public class PropertySort implements ISorting {
         return sorter;
     }
 
-    public static PropertySort c(short fieldIndex, SorterRef sorter, SortDirection order) {
-        return new PropertySort(fieldIndex, sorter, order);
+    public static PropertySort c(FieldIndex fieldIndex, SorterRef sorter, SortDirection order) {
+        return new PropertySort(fieldIndex.getIndex(), sorter, order);
     }
 
     public PropertySort(short fieldIndex, SorterRef sorter, SortDirection order) {

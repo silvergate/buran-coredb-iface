@@ -1,6 +1,7 @@
 package com.dcrux.buran.coredb.iface.query.propertyCondition;
 
 import com.dcrux.buran.coredb.iface.api.exceptions.ExpectableException;
+import com.dcrux.buran.coredb.iface.nodeClass.FieldIndex;
 import com.dcrux.buran.coredb.iface.nodeClass.ICmp;
 import com.dcrux.buran.coredb.iface.nodeClass.IType;
 import com.dcrux.buran.coredb.iface.nodeClass.NodeClass;
@@ -12,11 +13,11 @@ public class PropCondition implements IPropertyCondition {
     private final short typeIndex;
     private final ICmp comparator;
 
-    public static PropCondition c(int typeIndex, ICmp comparator) {
-        return new PropCondition((short) typeIndex, comparator);
+    public static PropCondition c(FieldIndex fieldIndex, ICmp comparator) {
+        return new PropCondition(fieldIndex.getIndex(), comparator);
     }
 
-    public PropCondition(short typeIndex, ICmp comparator) {
+    private PropCondition(short typeIndex, ICmp comparator) {
         this.typeIndex = typeIndex;
         this.comparator = comparator;
     }

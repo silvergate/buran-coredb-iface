@@ -27,7 +27,6 @@ import java.util.UUID;
  *
  * @author: ${USER} Date: 02.01.13 Time: 15:26
  */
-//FIXME Optional ersetzen mit weiteren methoden
 public interface IApi {
 
     /*********************************************************************************************
@@ -146,19 +145,19 @@ public interface IApi {
      ********************************************************************************************/
 
     /**
-     * Sets data to the property specified by typeIndex.
+     * Sets data to the property specified by fieldIndex.
      *
      * @param receiver
      * @param sender
      * @param incNid
-     * @param typeIndex
+     * @param fieldIndex
      *         Type index. Has to be defined in the class.
      * @param dataSetter
      *         An implementation of {@link IDataSetter}. Has to be supported by the type defined in
      *         the class.
      * @throws IncubationNodeNotFound
      */
-    void setData(UserId receiver, UserId sender, IncNid incNid, short typeIndex,
+    void setData(UserId receiver, UserId sender, IncNid incNid, FieldIndex fieldIndex,
             IDataSetter dataSetter) throws IncubationNodeNotFound, QuotaExceededException;
 
     /**
@@ -315,7 +314,7 @@ public interface IApi {
      * @param receiver
      * @param sender
      * @param nidVersion
-     * @param typeIndex
+     * @param fieldIndex
      *         Type index, is defined in the node class.
      * @param dataGetter
      *         Implementation of {@link IDataGetter}. Has to be supported by the type defined in the
@@ -327,7 +326,7 @@ public interface IApi {
      * @throws NodeNotFoundException
      */
     @Nullable
-    <TData> TData getData(UserId receiver, UserId sender, NidVer nidVersion, short typeIndex,
+    <TData> TData getData(UserId receiver, UserId sender, NidVer nidVersion, FieldIndex fieldIndex,
             IDataGetter<TData> dataGetter)
             throws InformationUnavailableException, PermissionDeniedException,
             NodeNotFoundException, QuotaExceededException;
