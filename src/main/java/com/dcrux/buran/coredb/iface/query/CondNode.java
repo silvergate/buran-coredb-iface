@@ -8,10 +8,10 @@ import com.google.common.base.Optional;
  */
 public class CondNode implements ICondNode {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6018472210420101383L;
-	private final Optional<INodeMetaCondition> metaCondition;
+     *
+     */
+    private static final long serialVersionUID = -6018472210420101383L;
+    private final Optional<INodeMetaCondition> metaCondition;
 
     public static CondNode c(INodeMetaCondition metaCondition) {
         return new CondNode(Optional.of(metaCondition));

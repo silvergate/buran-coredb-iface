@@ -8,11 +8,11 @@ import java.io.Serializable;
 public class EdgeIndex implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4131706503596091899L;
+     *
+     */
+    private static final long serialVersionUID = 4131706503596091899L;
 
-	public static final EdgeIndex BASIS = new EdgeIndex(0);
+    public static final EdgeIndex BASE = new EdgeIndex(0);
 
     public static final int MIN_INDEX = 0;
     public static final int MAX_INDEX = 65535;

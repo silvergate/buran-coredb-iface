@@ -1,13 +1,8 @@
 package com.dcrux.buran.coredb.iface.query.edgeCondition;
 
-import com.dcrux.buran.coredb.iface.Nid;
 import com.dcrux.buran.coredb.iface.NidVer;
-import com.dcrux.buran.coredb.iface.api.exceptions.ExpectableException;
 import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
 import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
-import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
-import com.dcrux.buran.coredb.iface.edgeTargets.UnversionedEdTarget;
-import com.dcrux.buran.coredb.iface.edgeTargets.VersionedEdTarget;
 import com.dcrux.buran.coredb.iface.nodeClass.ClassId;
 import com.dcrux.buran.coredb.iface.query.ICondNode;
 import com.dcrux.buran.coredb.iface.query.nodeMeta.IMetaInfoForQuery;
@@ -16,7 +11,6 @@ import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import javax.annotation.Nullable;
 import java.util.Map;
 
 /**
@@ -24,17 +18,6 @@ import java.util.Map;
  * File | Settings | File Templates.
  */
 public class InEdgeCondition implements INodeMetaCondition {
-
-    private static class NidVerOpt {
-        private final Nid nid;
-        @Nullable
-        private final Integer ver;
-
-        private NidVerOpt(Nid nid, @Nullable Integer ver) {
-            this.nid = nid;
-            this.ver = ver;
-        }
-    }
 
     private final EdgeLabel label;
     private final Optional<EdgeIndex> index;
@@ -98,7 +81,7 @@ public class InEdgeCondition implements INodeMetaCondition {
 
     @Override
     public boolean matches(IMetaInfoForQuery metaInfoForQuery) {
-        final Multimap<EdgeIndex, IEdgeTarget> queryableInEdges =
+        final Multimap<EdgeIndex, NidVer> queryableInEdges =
                 metaInfoForQuery.getQueryableInEdges(this.label);
 
         /* Label available? */
@@ -106,7 +89,7 @@ public class InEdgeCondition implements INodeMetaCondition {
             return false;
         }
 
-        final Multimap<EdgeIndex, IEdgeTarget> outEdgesToQuery;
+        final Multimap<EdgeIndex, NidVer> outEdgesToQuery;
         if (this.index.isPresent()) {
             outEdgesToQuery = HashMultimap.create();
             if (!queryableInEdges.containsKey(this.index.get())) {
@@ -117,7 +100,7 @@ public class InEdgeCondition implements INodeMetaCondition {
             outEdgesToQuery = queryableInEdges;
         }
 
-        for (Map.Entry<EdgeIndex, IEdgeTarget> elementToCheck : outEdgesToQuery.entries()) {
+        for (Map.Entry<EdgeIndex, NidVer> elementToCheck : outEdgesToQuery.entries()) {
             boolean matchesData = true;
             boolean matchesClass = true;
 
@@ -135,60 +118,20 @@ public class InEdgeCondition implements INodeMetaCondition {
         return false;
     }
 
-    @Nullable
-    private NidVerOpt getNidVerOptFromTarget(IEdgeTarget edgeTarget) {
-        final Integer version;
-        final Long oid;
-        switch (edgeTarget.getEdgeTargetType()) {
-            case externalUnversioned:
-          /* Externe können nie durchsucht werden */
-                oid = null;
-                version = null;
-                break;
-            case externalVersioned:
-          /* Externe können nie durchsucht werden */
-                oid = null;
-                version = null;
-                break;
-            case unversioned:
-                oid = ((UnversionedEdTarget) edgeTarget).getNid();
-                version = null;
-                break;
-            case versioned:
-                oid = ((VersionedEdTarget) edgeTarget).getNid();
-                version = ((VersionedEdTarget) edgeTarget).getVersion();
-                break;
-            default:
-                throw new ExpectableException("Unknown edge target");
-        }
-        if (oid == null) return null;
-        return new NidVerOpt(new Nid(oid), version);
-    }
-
-    private boolean matchesClass(IEdgeTarget edgeTarget, ClassId classId,
+    private boolean matchesClass(NidVer edgeSource, ClassId classId,
             IMetaInfoForQuery metaInfoForQuery) {
-        NidVerOpt nidVerOpt = getNidVerOptFromTarget(edgeTarget);
-        if (nidVerOpt == null) return false;
-        metaInfoForQuery.getNodeMatcher().matches(nidVerOpt.nid.getNid(), classId);
-        return true;
+        return metaInfoForQuery.getNodeMatcher().matches(edgeSource.getNid(), classId);
     }
 
 
-    private boolean matches(IEdgeTarget edgeTarget, IMetaInfoForQuery metaInfoForQuery) {
+    private boolean matches(NidVer edgeSource, IMetaInfoForQuery metaInfoForQuery) {
         boolean found;
         final Integer version;
         final Long oid;
 
-        NidVerOpt nidVerOpt = getNidVerOptFromTarget(edgeTarget);
-        if (nidVerOpt == null) {
-            found = false;
-            oid = null;
-            version = null;
-        } else {
-            found = true;
-            oid = nidVerOpt.nid.getNid();
-            version = nidVerOpt.ver;
-        }
+        found = true;
+        oid = edgeSource.getNid();
+        version = edgeSource.getVersion();
 
         if (oid != null) {
             if (version == null) {

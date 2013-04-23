@@ -22,6 +22,14 @@ public final class EdgeIndexRange implements Serializable {
         this.last = last;
     }
 
+    public static EdgeIndexRange c(EdgeIndex first, EdgeIndex last) {
+        return new EdgeIndexRange(first, last);
+    }
+
+    public static EdgeIndexRange c(int first, int last) {
+        return new EdgeIndexRange(EdgeIndex.c(first), EdgeIndex.c(last));
+    }
+
     public static EdgeIndexRange single(EdgeIndex index) {
         return new EdgeIndexRange(index, index);
     }

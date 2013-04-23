@@ -9,10 +9,10 @@ import java.io.Serializable;
  */
 public final class BlobData implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8666773146828707119L;
-	private final BinaryBlocks data;
+     *
+     */
+    private static final long serialVersionUID = 8666773146828707119L;
+    private final BinaryBlocks data;
 
     public BlobData(BinaryBlocks data) {
         this.data = data;

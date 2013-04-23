@@ -7,10 +7,10 @@ import java.io.Serializable;
  */
 public class ClassId implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7682520200924901367L;
-	private final long id;
+     *
+     */
+    private static final long serialVersionUID = 7682520200924901367L;
+    private final long id;
 
     public ClassId(long id) {
         this.id = id;

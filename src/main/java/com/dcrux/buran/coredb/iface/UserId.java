@@ -9,12 +9,12 @@ import java.io.Serializable;
  */
 public final class UserId implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3437689569331780671L;
-	private final long id;
+     *
+     */
+    private static final long serialVersionUID = -3437689569331780671L;
+    private final long id;
 
-	//FIXME rename to create
+    //FIXME rename to create
     public static UserId c(long id) {
         return new UserId(id);
     }

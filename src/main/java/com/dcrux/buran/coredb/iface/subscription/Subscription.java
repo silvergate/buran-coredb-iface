@@ -13,10 +13,10 @@ import java.util.EnumSet;
  */
 public class Subscription implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8488509764947945105L;
-	private final UserId receiver;
+     *
+     */
+    private static final long serialVersionUID = 8488509764947945105L;
+    private final UserId receiver;
     private final UserId sender;
     private final EnumSet<SubscriptionEventType> eventTypes;
     private final ICondNode query;

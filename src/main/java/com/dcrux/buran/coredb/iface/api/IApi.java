@@ -355,12 +355,16 @@ public interface IApi {
      * @throws PermissionDeniedException
      */
     Map<EdgeLabel, Map<EdgeIndex, IEdgeTarget>> getOutEdges(UserId receiver, UserId sender,
-            NidVer nid, EnumSet<EdgeType> types, Optional<EdgeLabel> label)
+            NidVer nid, EnumSet<EdgeType> types, Optional<EdgeIndexRange> indexRange,
+            Optional<EdgeLabel> label)
             throws NodeNotFoundException, InformationUnavailableException,
             PermissionDeniedException, QuotaExceededException;
 
     /**
-     * Gets in-edge from a node. Can optionally be filtered by various parameters.
+     * <p>Gets in-edge from a node. Can optionally be filtered by various parameters.</p> <p>Only
+     * returns those in-edges their source-node is from the same account as this node (the target
+     * node. Anm caelis: Muss so sein, da accounts gleichbehandelt werden müssen, und das nicht über
+     * verschiedene remote burans funktionieren würde.).</p>
      *
      * @param receiver
      * @param sender
@@ -380,7 +384,7 @@ public interface IApi {
      * @throws PermissionDeniedException
      * @throws QuotaExceededException
      */
-    Map<EdgeLabel, Multimap<EdgeIndex, IEdgeTarget>> getInEdges(UserId receiver, UserId sender,
+    Map<EdgeLabel, Multimap<EdgeIndex, NidVer>> getInEdges(UserId receiver, UserId sender,
             NidVer nid, EnumSet<HistoryState> sourceHistoryStates, Optional<ClassId> sourceClassId,
             EnumSet<EdgeType> types, Optional<EdgeIndexRange> indexRange, Optional<EdgeLabel> label)
             throws NodeNotFoundException, InformationUnavailableException,

@@ -10,10 +10,10 @@ import com.google.common.base.Optional;
  */
 public class CondCdNode extends CondNode {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7072990873438880577L;
-	private final long classId;
+     *
+     */
+    private static final long serialVersionUID = 7072990873438880577L;
+    private final long classId;
     private final Optional<IPropertyCondition> propertyCondition;
 
 

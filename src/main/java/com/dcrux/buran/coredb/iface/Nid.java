@@ -9,10 +9,10 @@ import java.io.Serializable;
  */
 public class Nid implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6068118424266616489L;
-	private final long nid;
+     *
+     */
+    private static final long serialVersionUID = 6068118424266616489L;
+    private final long nid;
 
     public Nid(long nid) {
         this.nid = nid;

@@ -11,10 +11,10 @@ import java.util.Set;
  */
 public class IndexData implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3855146901018612474L;
-	private final Set<Integer> highFuziness = new HashSet<>();
+     *
+     */
+    private static final long serialVersionUID = -3855146901018612474L;
+    private final Set<Integer> highFuziness = new HashSet<>();
     private final Set<Integer> mediumFuziness = new HashSet<>();
     private final Set<Integer> exact = new HashSet<>();
 

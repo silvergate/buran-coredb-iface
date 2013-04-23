@@ -8,11 +8,11 @@ package com.dcrux.buran.coredb.iface.api.exceptions;
 public class QuotaExceededException extends Exception {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2067236354193086763L;
+     *
+     */
+    private static final long serialVersionUID = -2067236354193086763L;
 
-	/**
+    /**
      * TODO: Das hier noch genauer definieren.
      */
     public enum DetailInformation {
