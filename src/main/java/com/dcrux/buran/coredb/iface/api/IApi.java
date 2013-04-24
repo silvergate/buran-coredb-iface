@@ -1,16 +1,20 @@
 package com.dcrux.buran.coredb.iface.api;
 
-import com.dcrux.buran.coredb.iface.*;
+import com.dcrux.buran.coredb.iface.UserId;
+import com.dcrux.buran.coredb.iface.api.apiData.*;
 import com.dcrux.buran.coredb.iface.api.exceptions.*;
 import com.dcrux.buran.coredb.iface.domains.DomainHash;
 import com.dcrux.buran.coredb.iface.domains.DomainId;
 import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
+import com.dcrux.buran.coredb.iface.edge.EdgeIndexRange;
 import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
 import com.dcrux.buran.coredb.iface.edge.EdgeType;
 import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.IIncEdgeTarget;
+import com.dcrux.buran.coredb.iface.node.*;
 import com.dcrux.buran.coredb.iface.nodeClass.*;
 import com.dcrux.buran.coredb.iface.query.IQuery;
+import com.dcrux.buran.coredb.iface.query.QueryResult;
 import com.dcrux.buran.coredb.iface.subscription.Subscription;
 import com.dcrux.buran.coredb.iface.subscription.SubscriptionId;
 import com.google.common.base.Optional;
@@ -175,7 +179,8 @@ public interface IApi {
      *         Target node in incubation.
      * @param src
      *         Source node (Note: historized nodes are valid too - if readable, see {@link
-     *         NodeState#historizedAvailable} and {@link NodeState#historizedPropertiesMissing}).
+     *         com.dcrux.buran.coredb.iface.node.NodeState#historizedAvailable} and {@link
+     *         com.dcrux.buran.coredb.iface.node.NodeState#historizedPropertiesMissing}).
      * @param transferExclusion
      *         Exclude information from transferring.
      * @throws IncubationNodeNotFound
@@ -211,7 +216,7 @@ public interface IApi {
      *         The specified (by label and index) edge already exists.
      * @throws IncubationNodeNotFound
      * @see #setEdgeReplace(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
-     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge
+     *      .UserId, com.dcrux.buran.coredb.iface.node.IncNid, com.dcrux.buran.coredb.iface.edge
      *      .EdgeIndex, com.dcrux.buran.coredb.iface.edge.EdgeLabel, com.dcrux.buran.coredb.iface
      *      .edgeTargets .IIncEdgeTarget)
      */
@@ -231,7 +236,7 @@ public interface IApi {
      * @param target
      * @throws IncubationNodeNotFound
      * @see #setEdge(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface.UserId,
-     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge.EdgeIndex,
+     *      com.dcrux.buran.coredb.iface.node.IncNid, com.dcrux.buran.coredb.iface.edge.EdgeIndex,
      *      com.dcrux.buran.coredb.iface.edge.EdgeLabel, com.dcrux.buran.coredb.iface.edgeTargets
      *      .IIncEdgeTarget)
      */
@@ -252,7 +257,7 @@ public interface IApi {
      *         Is thrown if the edge specified by label and index does not exists.
      * @throws IncubationNodeNotFound
      * @see #removeEdge(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface.UserId,
-     *      com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge.EdgeLabel,
+     *      com.dcrux.buran.coredb.iface.node.IncNid, com.dcrux.buran.coredb.iface.edge.EdgeLabel,
      *      com.dcrux.buran.coredb.iface.edge.EdgeIndex)
      */
     void removeEdgeStrict(UserId receiver, UserId sender, IncNid incNid, EdgeLabel label,
@@ -269,7 +274,7 @@ public interface IApi {
      * @param index
      * @throws IncubationNodeNotFound
      * @see #removeEdgeStrict(com.dcrux.buran.coredb.iface.UserId, com.dcrux.buran.coredb.iface
-     *      .UserId, com.dcrux.buran.coredb.iface.IncNid, com.dcrux.buran.coredb.iface.edge
+     *      .UserId, com.dcrux.buran.coredb.iface.node.IncNid, com.dcrux.buran.coredb.iface.edge
      *      .EdgeLabel, com.dcrux.buran.coredb.iface.edge.EdgeIndex)
      */
     void removeEdge(UserId receiver, UserId sender, IncNid incNid, EdgeLabel label, EdgeIndex index)
@@ -409,6 +414,21 @@ public interface IApi {
             throws NodeNotFoundException, PermissionDeniedException, QuotaExceededException;
 
     /**
+     * Returns meta information about the node.
+     *
+     * @param receiver
+     * @param sender
+     * @param nid
+     * @return
+     * @throws NodeNotFoundException
+     *         The given node was not found. The node does not exist (now and in the past).
+     * @throws PermissionDeniedException
+     * @throws QuotaExceededException
+     */
+    NodeMetadata getNodeMeta(UserId receiver, UserId sender, NidVer nid)
+            throws NodeNotFoundException, PermissionDeniedException, QuotaExceededException;
+
+    /**
      * Returns the current version of the node specified by its id.
      *
      * @param receiver
@@ -421,7 +441,7 @@ public interface IApi {
      */
     @Nullable
     NidVer getCurrentNodeVersion(UserId receiver, UserId sender, Nid nid)
-            throws NodeNotFoundException, QuotaExceededException;
+            throws NodeNotFoundException, QuotaExceededException, PermissionDeniedException;
 
     /**
      * Returns the latest version of a deleted node.
@@ -438,7 +458,7 @@ public interface IApi {
      */
     @Nullable
     NidVer getLatestVersionBeforeDeletion(UserId receiver, UserId sender, Nid nid)
-            throws NodeNotFoundException, QuotaExceededException;
+            throws NodeNotFoundException, QuotaExceededException, PermissionDeniedException;
 
     /**
      * Returns the class-id of the given node.

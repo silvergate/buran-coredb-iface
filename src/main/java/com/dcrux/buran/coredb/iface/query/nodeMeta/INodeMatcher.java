@@ -1,6 +1,6 @@
 package com.dcrux.buran.coredb.iface.query.nodeMeta;
 
-import com.dcrux.buran.coredb.iface.NidVer;
+import com.dcrux.buran.coredb.iface.node.NidVer;
 import com.dcrux.buran.coredb.iface.nodeClass.ClassId;
 import com.dcrux.buran.coredb.iface.query.ICondNode;
 

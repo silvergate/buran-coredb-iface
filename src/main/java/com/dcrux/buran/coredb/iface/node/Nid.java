@@ -1,4 +1,4 @@
-package com.dcrux.buran.coredb.iface;
+package com.dcrux.buran.coredb.iface.node;
 
 import java.io.Serializable;
 

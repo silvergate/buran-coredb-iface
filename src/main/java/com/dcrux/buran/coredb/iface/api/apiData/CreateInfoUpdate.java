@@ -1,6 +1,6 @@
-package com.dcrux.buran.coredb.iface.api;
+package com.dcrux.buran.coredb.iface.api.apiData;
 
-import com.dcrux.buran.coredb.iface.IncNid;
+import com.dcrux.buran.coredb.iface.node.IncNid;
 
 /**
  * Buran.

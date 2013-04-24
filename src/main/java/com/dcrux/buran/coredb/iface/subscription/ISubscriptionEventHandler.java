@@ -1,6 +1,6 @@
 package com.dcrux.buran.coredb.iface.subscription;
 
-import com.dcrux.buran.coredb.iface.NidVer;
+import com.dcrux.buran.coredb.iface.node.NidVer;
 
 /**
  * Buran.

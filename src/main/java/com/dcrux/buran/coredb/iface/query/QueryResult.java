@@ -1,6 +1,6 @@
-package com.dcrux.buran.coredb.iface.api;
+package com.dcrux.buran.coredb.iface.query;
 
-import com.dcrux.buran.coredb.iface.NidVer;
+import com.dcrux.buran.coredb.iface.node.NidVer;
 import com.google.common.base.Optional;
 
 import java.util.List;

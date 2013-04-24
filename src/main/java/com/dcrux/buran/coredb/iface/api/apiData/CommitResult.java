@@ -1,7 +1,7 @@
-package com.dcrux.buran.coredb.iface.api;
+package com.dcrux.buran.coredb.iface.api.apiData;
 
-import com.dcrux.buran.coredb.iface.IncNid;
-import com.dcrux.buran.coredb.iface.NidVer;
+import com.dcrux.buran.coredb.iface.node.IncNid;
+import com.dcrux.buran.coredb.iface.node.NidVer;
 
 import java.util.Map;
 

@@ -1,6 +1,6 @@
 package com.dcrux.buran.coredb.iface.edgeTargets;
 
-import com.dcrux.buran.coredb.iface.Nid;
+import com.dcrux.buran.coredb.iface.node.Nid;
 
 /**
  * @author caelis

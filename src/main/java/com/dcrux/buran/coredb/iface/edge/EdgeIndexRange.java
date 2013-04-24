@@ -1,6 +1,4 @@
-package com.dcrux.buran.coredb.iface.api;
-
-import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
+package com.dcrux.buran.coredb.iface.edge;
 
 import java.io.Serializable;
 

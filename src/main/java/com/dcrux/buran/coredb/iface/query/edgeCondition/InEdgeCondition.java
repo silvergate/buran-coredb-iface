@@ -1,8 +1,8 @@
 package com.dcrux.buran.coredb.iface.query.edgeCondition;
 
-import com.dcrux.buran.coredb.iface.NidVer;
 import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
 import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
+import com.dcrux.buran.coredb.iface.node.NidVer;
 import com.dcrux.buran.coredb.iface.nodeClass.ClassId;
 import com.dcrux.buran.coredb.iface.query.ICondNode;
 import com.dcrux.buran.coredb.iface.query.nodeMeta.IMetaInfoForQuery;

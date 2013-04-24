@@ -1,4 +1,4 @@
-package com.dcrux.buran.coredb.iface.api;
+package com.dcrux.buran.coredb.iface.api.apiData;
 
 import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
 import com.dcrux.buran.coredb.iface.nodeClass.FieldIndex;

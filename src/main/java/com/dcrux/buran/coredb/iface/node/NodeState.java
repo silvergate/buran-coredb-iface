@@ -1,4 +1,4 @@
-package com.dcrux.buran.coredb.iface;
+package com.dcrux.buran.coredb.iface.node;
 
 /**
  * Buran.
@@ -9,6 +9,9 @@ public enum NodeState {
     available(0),
     historizedAvailable(10),
     historizedPropertiesMissing(11),
+    /**
+     * Properties and edges are missing. Node metadata (like valid-from and valid-to is available).
+     */
     historizedAllMissing(12),
     unavailablePropertiesMissing(20),
     unavailableAllMissing(21);

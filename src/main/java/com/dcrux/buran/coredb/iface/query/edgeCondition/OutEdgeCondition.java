@@ -1,6 +1,5 @@
 package com.dcrux.buran.coredb.iface.query.edgeCondition;
 
-import com.dcrux.buran.coredb.iface.NidVer;
 import com.dcrux.buran.coredb.iface.api.exceptions.ExpectableException;
 import com.dcrux.buran.coredb.iface.edge.Edge;
 import com.dcrux.buran.coredb.iface.edge.EdgeIndex;
@@ -8,6 +7,7 @@ import com.dcrux.buran.coredb.iface.edge.EdgeLabel;
 import com.dcrux.buran.coredb.iface.edgeTargets.IEdgeTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.UnversionedEdTarget;
 import com.dcrux.buran.coredb.iface.edgeTargets.VersionedEdTarget;
+import com.dcrux.buran.coredb.iface.node.NidVer;
 import com.dcrux.buran.coredb.iface.nodeClass.ClassId;
 import com.dcrux.buran.coredb.iface.query.ICondNode;
 import com.dcrux.buran.coredb.iface.query.nodeMeta.IMetaInfoForQuery;
