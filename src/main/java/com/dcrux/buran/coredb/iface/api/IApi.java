@@ -97,7 +97,7 @@ public interface IApi {
             Optional<KeepAliveHint> keepAliveHint, NidVer nodeToUpdate,
             Optional<HistoryHint> historyHint)
             throws NodeNotUpdatable, PermissionDeniedException, HistoryHintNotFulfillable,
-            QuotaExceededException;
+            QuotaExceededException, NodeNotFoundException;
 
     /**
      * Commits one or more nodes from incubation. This method works atomic.
@@ -113,7 +113,7 @@ public interface IApi {
      */
     CommitResult commit(UserId receiver, UserId sender, IncNid... incNid)
             throws OptimisticLockingException, PermissionDeniedException, IncubationNodeNotFound,
-            QuotaExceededException;
+            QuotaExceededException, NodeNotFoundException;
 
     /**
      * Extends the keep alive time of a node in incubation.
@@ -334,7 +334,7 @@ public interface IApi {
     <TData> TData getData(UserId receiver, UserId sender, NidVer nidVersion, FieldIndex fieldIndex,
             IDataGetter<TData> dataGetter)
             throws InformationUnavailableException, PermissionDeniedException,
-            NodeNotFoundException, QuotaExceededException;
+            NodeNotFoundException, QuotaExceededException, VersionNotFoundException;
 
     /**
      * Gets out-edge from a node. Can optionally be filtered by label and public and private edge.
@@ -411,7 +411,8 @@ public interface IApi {
      * @throws PermissionDeniedException
      */
     NodeState getNodeState(UserId receiver, UserId sender, NidVer nid)
-            throws NodeNotFoundException, PermissionDeniedException, QuotaExceededException;
+            throws NodeNotFoundException, PermissionDeniedException, QuotaExceededException,
+            VersionNotFoundException;
 
     /**
      * Returns meta information about the node.
@@ -426,7 +427,8 @@ public interface IApi {
      * @throws QuotaExceededException
      */
     NodeMetadata getNodeMeta(UserId receiver, UserId sender, NidVer nid)
-            throws NodeNotFoundException, PermissionDeniedException, QuotaExceededException;
+            throws NodeNotFoundException, PermissionDeniedException, QuotaExceededException,
+            VersionNotFoundException;
 
     /**
      * Returns the current version of the node specified by its id.
